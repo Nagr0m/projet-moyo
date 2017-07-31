@@ -11,10 +11,10 @@ class Question extends Model
 	protected $fillable = [];
 
 	public function choices() {
-		return $this->asMany(Choice::class);
+		return $this->hasMany(Choice::class);
 	}
 
 	public function scores() {
-		return $this->asMany(Score::class);
+		return $this->hasMany(Score::class);
 	}
 }
