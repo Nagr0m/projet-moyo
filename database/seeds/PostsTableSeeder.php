@@ -12,7 +12,7 @@ class PostsTableSeeder extends Seeder
     public function run(Faker\Generator $faker)
     {   
         for ($i = 0; $i < 10; $i++)
-        {
+        {   
             $content = $faker->realText(400);
             $post = App\Post::create([
                 'user_id'       => App\User::where('role', 'teacher')->limit(1)->get()[0]->id,
@@ -24,8 +24,8 @@ class PostsTableSeeder extends Seeder
                 'published'     => true,
             ]);
 
+            # Ajout de commentaires
             $nbComments = rand(0, 10);
-
             for ($j = 0; $j < $nbComments; $j++)
             {
                 $post->comments()->create([
@@ -34,8 +34,6 @@ class PostsTableSeeder extends Seeder
                     'published' => true,
                 ]);
             }
-
-            
         }
     }
 }
