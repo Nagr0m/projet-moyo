@@ -14,7 +14,7 @@ class PostsTableSeeder extends Seeder
         for ($i = 0; $i < 10; $i++)
         {
             $content = $faker->realText(400);
-            App\Post::create([
+            $post = App\Post::create([
                 'user_id'       => App\User::where('role', 'teacher')->limit(1)->get()[0]->id,
                 'title'         => $faker->realText(50),
                 'abstract'      => Illuminate\Support\Str::words($content, 10),
@@ -23,6 +23,19 @@ class PostsTableSeeder extends Seeder
                 'published_at'  => Carbon\Carbon::now(),
                 'published'     => true,
             ]);
+
+            $nbComments = rand(0, 10);
+
+            for ($j = 0; $j < $nbComments; $j++)
+            {
+                $post->comments()->create([
+                    'name'      => $faker->userName,
+                    'content'   => $faker->text(),
+                    'published' => true,
+                ]);
+            }
+
+            
         }
     }
 }

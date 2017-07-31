@@ -8,7 +8,7 @@ class Comment extends Model
 {
 	protected $dates = ['created_at', 'updated_at'];
 
-	protected $fillable = [];
+	protected $fillable = ['name', 'content', 'post_id'];
 
 	public function post() {
 		return $this->belongsTo(Post::class);
