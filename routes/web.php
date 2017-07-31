@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 # Authentification
-Route::match(['get', 'post'], 'login', 'LoginController@index')->name('login');
+Route::match(['get', 'post'], 'login', 'LoginController@login')->name('login');
 Route::get('logout', 'LoginController@logout')->name('logout');
 
 # Teacher back-office group
