@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id')->nullable();
             $table->string('title', 100);
-            $table->string('abstract', 200);
+            $table->string('abstract');
             $table->text('content');
             $table->string('url_thumbnail')->nullable();
             $table->timestamp('published_at')->nullable();
