@@ -15,7 +15,7 @@
 </head>
 <body class="valign-wrapper" id="login">
     
-    <main class="container">
+    <div class="container">
          <div class="row">
             <div class="col s12 m10 xl6 offset-m1 offset-xl3">
                 <div class="card">
@@ -40,7 +40,7 @@
                 <a class="waves-effect waves-green btn-flat white-text" href="{{ route('home') }}" ><i class="material-icons left">navigate_before</i>Retour sur le site</a>
             </div>
         </div> 
-    </main>
+    </div>
 
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
     {{-- MaterializeJS --}}

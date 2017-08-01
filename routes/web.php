@@ -20,10 +20,8 @@ Route::get('logout', 'LoginController@logout')->name('logout');
 # Teacher back-office group
 Route::namespace('Teacher')->prefix('teacher')->middleware(['auth', 'role:teacher'])->group(function () {
     
-    Route::get('dashboard', function () {
-        return 'teacherhome';
-    })->name('teacher/home');
-    
+    Route::get('dashboard', 'DashboardController@index')->name('teacher/home');
+
 });
 
 # Student access
