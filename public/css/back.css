@@ -1,0 +1,33 @@
+
+/* Full height */
+html, body, .full-height {
+    height: 100vh;
+}
+
+/* Error messages fix */
+label { width: 100%; }
+
+/* Change all inputs colors */
+
+/* label focus color */
+.input-field input:not(.browser-default):focus:not([readonly]) + label 
+{
+    color: #4caf50;
+}
+/* label underline focus color */
+.input-field input:not(.browser-default):focus:not([readonly]) 
+{
+    border-bottom: 1px solid #4caf50;
+    box-shadow: 0 1px 0 0 #4caf50;
+}
+
+/* icon prefix focus color */
+.input-field .prefix.active {
+    color: #4caf50;
+}
+
+/* Login page styles */
+#login {
+    background: url('/img/login_bg.jpg');
+    background-size: cover;
+}
