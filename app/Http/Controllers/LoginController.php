@@ -16,7 +16,7 @@ class LoginController extends Controller
         }
 
         # Affichage de la page de login
-        return 'loginpage';
+        return view('login');
     }
 
     public function logout ()
