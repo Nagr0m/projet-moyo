@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'FrontController@home')->name('home');
 
 # Authentification
 Route::match(['get', 'post'], 'login', 'LoginController@login')->name('login');
