@@ -21,6 +21,7 @@ class UsersTableSeeder extends Seeder
                 'email'    => $faker->email,
                 'password' => bcrypt('secret'),
                 'role'     => $user->role,
+                'level'    => ($user->level) ?: null,
             ]);
         }
     }
