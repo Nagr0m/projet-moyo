@@ -10,7 +10,6 @@ class FrontController extends Controller
 	public function home()
 	{
 		$robots = Post::with('user')->published()->take(3)->get();
-		dd($robots[0]);
 		return view('front.home');
 	}
 }
