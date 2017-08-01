@@ -9,7 +9,7 @@ class FrontController extends Controller
 {
 	public function home()
 	{
-		$robots = Post::with('user')->published()->take(3)->get();
-		return view('front.home');
+		$posts = Post::with('user')->published()->take(3)->get();
+		return view('front.home', compact('posts'));
 	}
 }
