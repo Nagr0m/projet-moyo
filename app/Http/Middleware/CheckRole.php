@@ -16,15 +16,12 @@ class CheckRole
      */
     public function handle($request, Closure $next, $role)
     {   
-        if ($role === 'student')
+        if ($request->user()->role !== $role)
         {
             if ($request->user()->role === 'teacher')
-                return redirect('/teacher/home');
-        }
-        else
-        {
-            if ($request->user()->role !== 'teacher')
-                return redirect('/student/home');
+                return redirect()->route('teacher/home');
+            else
+                return redirect()->route('student/home');
         }
 
         return $next($request);
