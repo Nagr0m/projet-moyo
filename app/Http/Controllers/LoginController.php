@@ -25,9 +25,9 @@ class LoginController extends Controller
                 session()->flash('message', 'Bienvenue !');
 
                 if (Auth::user()->role === 'teacher')
-                    return redirect()->intended('/teacher/home');
+                    return redirect()->route('teacher/home');
                 
-                return redirect()->intended('/student/home');
+                return redirect()->route('student/home');
             }
         }
 
@@ -37,6 +37,12 @@ class LoginController extends Controller
 
     public function logout ()
     {
-        return 'logoutpage';
+        if(Auth::check())
+    	{
+    		Auth::logout();
+    		session()->flash('message', 'À bientôt !');
+    	}
+
+    	return redirect()->intended('/');
     }
 }

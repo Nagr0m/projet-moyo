@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->enum('role', ['teacher', 'student']);
             $table->enum('level', ['first_class', 'final_class'])->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

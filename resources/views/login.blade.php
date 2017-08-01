@@ -37,7 +37,7 @@
                         </form>
                     </div>
                 </div>
-                <a class="waves-effect waves-green btn-flat white-text" href="" ><i class="material-icons left">navigate_before</i>Retour sur le site</a>
+                <a class="waves-effect waves-green btn-flat white-text" href="{{ route('home') }}" ><i class="material-icons left">navigate_before</i>Retour sur le site</a>
             </div>
         </div> 
     </main>
