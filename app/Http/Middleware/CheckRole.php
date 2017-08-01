@@ -14,7 +14,7 @@ class CheckRole
      * @param string $role
      * @return mixed
      */
-    public function handle($request, Closure $next, $role = 'student')
+    public function handle($request, Closure $next, $role)
     {   
         if ($role === 'student')
         {

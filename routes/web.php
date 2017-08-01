@@ -25,6 +25,6 @@ Route::namespace('Teacher')->middleware(['auth', 'role:teacher'])->group(functio
 });
 
 # Student access
-Route::namespace('Student')->middleware(['auth', 'role'])->group(function () {
+Route::namespace('Student')->middleware(['auth', 'role:student'])->group(function () {
 
 });
