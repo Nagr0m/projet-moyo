@@ -21,10 +21,10 @@ Route::get('logout', 'LoginController@logout')->name('logout');
 
 # Teacher back-office group
 Route::namespace('Teacher')->middleware(['auth', 'role:teacher'])->group(function () {
-
+        
 });
 
 # Student access
 Route::namespace('Student')->middleware(['auth', 'role:student'])->group(function () {
-
+    
 });
