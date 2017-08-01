@@ -11,7 +11,15 @@
 |
 */
 
+# Front
 Route::get('/', 'FrontController@home')->name('home');
+Route::get('actus', 'FrontController@actus')->name('actus');
+Route::get('actu/{id}', 'FrontController@actu')->name('actu');
+Route::get('contact', 'FrontController@contact')->name('contact');
+Route::get('lycee', 'FrontController@lycee')->name('lycee');
+Route::get('mentionslegales', 'FrontController@mentionslegales')->name('mentionslegales');
+
+Route::post('comment', 'FrontController@comment')->name('comment');
 
 # Authentification
 Route::match(['get', 'post'], 'login', 'LoginController@login')->name('login');
