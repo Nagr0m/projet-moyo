@@ -16,20 +16,20 @@
 
     @include('partials.back_header')
 
-    <aside>
-        <div id="side-nav" class="side-nav z-depth-0 fixed green">
-            <p>This is the sidebar</p>
-        </div>
-    </aside>
+    {{-- Sidebar --}}
+    @if(classActivePath('teacher'))
+        @include('partials.teacher_sidebar')
+    @endif
 
     <main class="wrapper">
         @yield('content')
     </main>
 
     @section('scripts')
+        {{-- MaterializeJS & jQuery --}}
         <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-        {{-- MaterializeJS --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
+        
         <script>
             $( () => {
                 $(".button-collapse").sideNav()

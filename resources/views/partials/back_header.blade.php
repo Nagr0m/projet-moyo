@@ -15,7 +15,7 @@
             </ul>
         </div>
     </nav>
-    <ul id="dropdownUser" class="dropdown-content">
+    <ul id="dropdownUser" class="dropdown-content z-depth-0">
         <li><a href="{{ route('logout') }}"><i class="material-icons">highlight_off</i>Déconnexion</a></li>
     </ul>
 </header>

@@ -10,3 +10,13 @@ if (!function_exists('plural_string'))
         return;
     }
 }
+
+if (!function_exists('classActivePath')) {
+
+		function classActivePath($path)
+		{	
+			$reg = '#'.$path.'#';
+            
+			return preg_match($reg, Request::path()) ? ' class=active' : '';
+		}
+}
