@@ -16,7 +16,12 @@ class DashboardController extends Controller
     }
 
     public function index ()
-    {
-        return view('teacher.dashboard');
+    {   
+        $posts     = \App\Post::orderBy('published_at', 'desc')->get();
+        $questions = \App\Question::all();
+        $comments  = \App\Comment::all();
+        $students  = \App\User::where('role', 'student')->count();
+
+        return view('teacher.dashboard', compact('posts', 'questions', 'comments', 'students'));
     }
 }

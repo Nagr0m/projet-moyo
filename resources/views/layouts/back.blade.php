@@ -10,23 +10,31 @@
     {{-- MaterializeCSS --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <link rel="stylesheet" href="{{ URL::asset('css/back.css') }}">
 </head>
-<body id="back">
+<body id="back" class="grey-text text-darken-4">
 
     @include('partials.back_header')
 
     <aside>
-        <ul id="side-nav" class="side-nav fixed">
-            <li>THis is the sidebar</li>
-        </ul>
+        <div id="side-nav" class="side-nav z-depth-0 fixed green">
+            <p>This is the sidebar</p>
+        </div>
     </aside>
+
+    <main class="wrapper">
+        @yield('content')
+    </main>
 
     @section('scripts')
         <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
         {{-- MaterializeJS --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
+        <script>
+            $( () => {
+                $(".button-collapse").sideNav()
+            })
+        </script>
     @show
 </body>
 </html>
