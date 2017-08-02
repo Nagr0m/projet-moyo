@@ -33,6 +33,7 @@
         <script>
             $( () => {
                 $(".button-collapse").sideNav()
+                $('select').material_select()
             })
         </script>
     @show

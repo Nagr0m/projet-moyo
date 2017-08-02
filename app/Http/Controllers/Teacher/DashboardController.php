@@ -17,8 +17,8 @@ class DashboardController extends Controller
 
     public function index ()
     {   
-        $posts     = \App\Post::select('title', 'published')->orderBy('published_at', 'desc')->get();
-        $questions = \App\Question::select('content', 'published')->orderBy('created_at', 'desc')->get();
+        $posts     = \App\Post::select('id', 'title', 'published')->orderBy('published_at', 'desc')->get();
+        $questions = \App\Question::select('id', 'content', 'published')->orderBy('created_at', 'desc')->get();
         $comments  = \App\Comment::count();
         $students  = \App\User::where('role', 'student')->count();
 

@@ -37,7 +37,7 @@ body#back {
     color: #333333;
 }
 .wrapper {
-    width: 90%;
+    width: 98%;
     margin: 0 auto;
 }
 
@@ -62,7 +62,6 @@ header, main, footer {
     background:url('/img/login_bg.jpg');
     background-size: cover;
 }
-
 #side-nav .layer {
     background-color: rgba(96, 187, 100, 0.8);
     position: absolute;
@@ -71,6 +70,7 @@ header, main, footer {
     width: 100%;
     height: 100%;
 }
+#side-nav .wrapper { width: 90%; }
 .side-head {
     height: 56px;
     line-height: 56px;
@@ -87,7 +87,11 @@ header, main, footer {
 #side-nav li > a:hover { background: rgba(255, 255, 255, 0.13); }
 #side-nav li.active { background-color: rgba(255, 255, 255, 0.23); }
 
-/* Elements */
+.valign-wrapper > .col {
+    margin-left: 0!important;
+}
+
+/* Elements & Override */
 .btn, .btn-flat { border-radius: 4px !important; }
 
 .panel {
@@ -111,7 +115,7 @@ header, main, footer {
     font-weight: 500;
 }
 .panel-content > .panel-item:last-child { padding-bottom: 0; }
-.panel-content > .panel-item i { line-height: inherit; }
+.panel-content > .panel-item i.tiny { line-height: inherit; }
 .panel-content > .panel-item a { color: inherit; }
 .panel-content > .panel-item a:hover { color: #039be5; }
 
@@ -123,11 +127,11 @@ header, main, footer {
 .dropdown-content {
     border-radius: 4px;
     border: 1px solid #ddd;
+    box-shadow: none;
 }
 
 /* Media */
 @media only screen and (max-width : 992px) {
-    /* Sidebar padding */
     header, main, footer { padding-left: 0; }
 }
 @media only screen and (min-width : 992px) {

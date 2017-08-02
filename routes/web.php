@@ -30,6 +30,11 @@ Route::get('logout', 'LoginController@logout')->name('logout');
 Route::namespace('Teacher')->prefix('teacher')->middleware(['auth', 'role:teacher'])->group(function () {
     
     Route::get('dashboard', 'DashboardController@index')->name('teacher/home');
+    Route::get('students', function () {
+
+    })->name('students.index');
+    Route::resource('posts', 'PostController');
+    Route::resource('questions', 'QuestionController');
 
 });
 

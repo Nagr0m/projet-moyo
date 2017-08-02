@@ -18,7 +18,7 @@
                         @endif
                         @forelse($questions as $question)
                             <span class="panel-item valign-wrapper">
-                                <a href="">
+                                <a href="{{ route('questions.edit', $question->id) }}">
                                      <i class="tiny material-icons left @if($question->published) light-green-text text-accent-4 @else red-text @endif">brightness_1</i>
                                      {{ $question->content }}
                                 </a>
@@ -43,7 +43,7 @@
                         @endif
                         @forelse($posts as $post)
                             <span class="panel-item valign-wrapper">
-                                <a href="">
+                                <a href="{{ route('posts.edit', $post->id) }}">
                                     <i class="tiny material-icons left @if($post->published) light-green-text text-accent-4 @else red-text @endif">brightness_1</i>
                                     {{$post->title}}
                                 </a>
@@ -66,10 +66,22 @@
                     </div>
                     <div class="divider"></div>
                     <div class="panel-content">
-                        <span class="panel-item valign-wrapper"><i class="material-icons left light-blue-text">description</i>{{ $posts->count() }} article{{ plural_string($posts) }}</span>
-                        <span class="panel-item valign-wrapper"><i class="material-icons left deep-orange-text text-darken-3">school</i>{{ $questions->count() }} questionnaire{{ plural_string($questions) }}</span>
+                        <span class="panel-item valign-wrapper">
+                            <a href="{{ route('questions.index') }}">
+                                <i class="material-icons left light-blue-text">description</i>{{ $posts->count() }} article{{ plural_string($posts) }}
+                            </a>
+                        </span>
+                        <span class="panel-item valign-wrapper">
+                            <a href="{{ route('posts.index') }}">
+                                <i class="material-icons left deep-orange-text text-darken-3">school</i>{{ $questions->count() }} questionnaire{{ plural_string($questions) }}
+                            </a>
+                        </span>
                         <span class="panel-item valign-wrapper"><i class="material-icons left light-green-text">chat</i>{{ $comments }} commentaire{{ plural_string($comments) }}</span>
-                        <span class="panel-item valign-wrapper"><i class="material-icons left brown-text">people</i>{{ $students }} élève{{ plural_string($students) }}</span>
+                        <span class="panel-item valign-wrapper">
+                            <a href="{{ route('students.index') }}">
+                                <i class="material-icons left brown-text">people</i>{{ $students }} élève{{ plural_string($students) }}
+                            </a>
+                        </span>
                     </div>
                 </article>
 

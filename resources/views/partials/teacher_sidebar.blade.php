@@ -8,7 +8,7 @@
                 <div class="divider white"></div>
                 <ul>
                     <li {{ classActivePath('dashboard') }}>
-                        <a href=""><i class="material-icons">home</i>Accueil</a>
+                        <a href="{{ route('teacher/home') }}"><i class="material-icons">home</i>Accueil</a>
                     </li>
                     <li {{ classActivePath('posts') }}>
                         <a href="{{ route('posts.index') }}"><i class="material-icons">description</i>Articles</a>
