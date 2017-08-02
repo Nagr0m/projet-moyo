@@ -22,13 +22,16 @@
 				@yield('content')
 			</div>
 			<aside class="sidebar one-quarter">
-				@yield('sidebar')
+				@include('partials.sidebar')
 			</aside>
 		</div>
 	</div>
 
-
 	@include('partials.footer')
-	
+
+	@section('scripts')
+		{{-- Widget Twitter --}}
+		<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+	@show
 </body>
 </html>

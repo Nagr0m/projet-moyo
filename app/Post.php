@@ -18,16 +18,6 @@ class Post extends Model
 		return $this->hasMany(Comment::class);
 	}
 
-	public function commentsCountRelation()
-	{
-		return $this->hasOne(Comment::class)->selectRaw('post_id, count(*) as count')->groupBy('post_id');
-	}
-
-	public function getCommentsCountAttribute()
-	{
-		return $this->commentsCountRelation->count;
-	}
-
 	public function scopePublished($query) {
 		return $query->where('published', true)->orderby('published_at', 'DESC');
 	}
