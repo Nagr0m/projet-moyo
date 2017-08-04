@@ -18,8 +18,8 @@ class CreateChoicesTable extends Migration
             $table->unsignedInteger('question_id');
             $table->text('content');
             $table->enum('answer', ['yes', 'no']);
-            $table->foreign('question_id')->references('id')->on('questions')->onDelete('CASCADE');
             $table->timestamps();
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('CASCADE');
         });
     }
 

@@ -19,9 +19,9 @@ class CreateScoresTable extends Migration
             $table->unsignedInteger('question_id')->nullable();
             $table->boolean('done')->default(false);
             $table->integer('note')->default(0);
+            $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('SET NULL');
-            $table->timestamps();
         });
     }
 

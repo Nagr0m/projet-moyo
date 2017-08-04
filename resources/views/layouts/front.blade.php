@@ -13,9 +13,10 @@
 
 </head>
 <body>
-
-	@include('partials.front_header')
-
+	<header class="header">
+		@include('partials.front_header')
+	</header>
+	
 	<div class="container">
 		<div class="grid">
 			<div class="content three-quarters">
