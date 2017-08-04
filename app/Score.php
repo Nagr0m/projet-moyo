@@ -17,4 +17,8 @@ class Score extends Model
 	public function user() {
 		return $this->belongTo(User::class);
 	}
+
+	public function scopePublished($query) {
+		return $query->where('published', true);
+	}
 }

@@ -19,6 +19,8 @@
     {{-- Sidebar --}}
     @if(classActivePath('teacher'))
         @include('partials.teacher_sidebar')
+    @elseif(classActivePath('student'))
+        @include('partials.student_sidebar')
     @endif
 
     <main class="wrapper">

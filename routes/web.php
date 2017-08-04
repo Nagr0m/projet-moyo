@@ -41,8 +41,7 @@ Route::namespace('Teacher')->prefix('teacher')->middleware(['auth', 'role:teache
 # Student access
 Route::namespace('Student')->prefix('student')->middleware(['auth', 'role:student'])->group(function () {
 
-    Route::get('dashboard', function () {
-        return 'studenthome';
-    })->name('student/home');
+    Route::get('dashboard', 'DashboardController@index')->name('student/home');
+    Route::get('questions', 'DashboardController@questions')->name('student/questions');
 
 });
