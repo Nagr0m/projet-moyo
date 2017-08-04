@@ -17,4 +17,9 @@ class Question extends Model
 	public function scores() {
 		return $this->hasMany(Score::class);
 	}
+
+	public function scopePublished($query) {
+		return $query->where('published', true);
+	}
+
 }
