@@ -8,7 +8,7 @@ class Score extends Model
 {
     protected $dates = ['created_at', 'updated_at'];
 
-	protected $fillable = [];
+	protected $fillable = ['user_id', 'question_id', 'done'];
 
 	public function question() {
 		return $this->belongTo(Question::class);

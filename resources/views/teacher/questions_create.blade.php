@@ -53,16 +53,14 @@
                         <div class="divider"></div>
                         <div class="panel-content row">
                             <div class="col s12" id="questionsContainer">
-                            
+                                
                             </div>
                             <div class="col s12">
                                 <p>
                                     <a class="btn-flat waves-effect waves-green right" id="delQuestion"><i class="material-icons left">close</i>Supprimer</a>
                                     <a class="btn-flat waves-effect waves-green right addQuestion"><i class="material-icons left">add</i>Ajouter</a>
                                 </p>
-                                
                             </div>
-                            
                         </div>
                     </div>
                 </section>
@@ -103,14 +101,14 @@
                     <div class="switch col s12">\
                         <label>\
                             Faux\
-                            <input type="checkbox" name="answer-' + toIncrement.id + '">\
+                            <input type="checkbox" name="answer_' + toIncrement.id + '">\
                             <span class="lever"></span>\
                             Vrai\
                         </label>\
                     </div>\
                 </div>'
 
-                $(questionContainer).append(template)
+                questionContainer.append(template)
 
                 index++;
             }

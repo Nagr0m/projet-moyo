@@ -8,7 +8,7 @@ class Question extends Model
 {
 	protected $dates = ['created_at', 'updated_at'];
 
-	protected $fillable = [];
+	protected $fillable = ['content', 'class_level', 'published'];
 
 	public function choices() {
 		return $this->hasMany(Choice::class);
@@ -21,5 +21,4 @@ class Question extends Model
 	public function scopePublished($query) {
 		return $query->where('published', true);
 	}
-
 }
