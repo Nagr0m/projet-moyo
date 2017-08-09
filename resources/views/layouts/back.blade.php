@@ -34,6 +34,7 @@
         
         <script>
             $( () => {
+                // Initialisation des éléments MaterializeCSS
                 $(".button-collapse").sideNav()
                 $('select').material_select()
             })

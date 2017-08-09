@@ -3,26 +3,41 @@
 @section('title', 'Créer un nouveau questionnaire')
 
 @section('content')
-    @if(count($errors) > 0)
-        {{ dump($errors) }}
-        @endif
     <div class="section">
         <div class="row">
-            <form method="post" action="{{ route('questions.store') }}">
+            {{-- Front-end validation --}}
+            <div class="col s12 frontErrors" style="display:none">
+                <div class="panel col s12 red accent-1">
+                    <div class="panel-content">
+                        Certains champs comportent des erreurs.
+                    </div>
+                </div>
+            </div>
+            {{-- Back-end validation --}}
+            @if(count($errors) > 0)
+                <div class="col s12">
+                    <div class="panel col s12 red accent-1">
+                        <div class="panel-content">
+                            Le formulaire comporte des erreurs.
+                        </div>
+                    </div>
+                </div>
+            @endif 
+            <form method="post" action="{{ route('questions.store') }}" id="questionForm">
                 {{ csrf_field() }}
                 <section class="col s12 m4 push-m8">
                     <div class="panel">
                         <div class="panel-content row">
-                            <div class="input-field col s12">
-                                <select name="class_level">
+                            <div class="input-field col s12 @if($errors->has('class_level'))invalid @endif" data-error="{{$errors->first('class_level')}}">
+                                <select name="class_level" @if($errors->has('class_level')) class="invalid" @endif</select>>
                                     <option disabled selected>Choisir un niveau</option>
                                     <option value="first_class">Première</option>
                                     <option value="final_class">Terminale</option>
                                 </select>
                                 <label for="content">Niveau (obligatoire)</label>
                             </div>
-                            <div class="input-field col s12">
-                                <select name="published">
+                            <div class="input-field col s12 @if($errors->has('published')) invalid @endif" data-error="{{$errors->first('published')}}">
+                                <select name="published" @if($errors->has('published')) class="invalid" @endif>
                                     <option value="1">Publié</option>
                                     <option value="0" selected>Non publié</option>
                                 </select>
@@ -41,8 +56,8 @@
                         </div>
                         <div class="divider"></div>
                         <div class="panel-content">
-                            <div class="input-field col s12">
-                                <textarea id="content" name="content" class="materialize-textarea">{{ old('content') }}</textarea>
+                            <div class="input-field col s12 @if($errors->has('content')) invalid @endif" data-error="{{$errors->first('content')}}">
+                                <textarea id="content" name="content" class="materialize-textarea @if($errors->has('content')) invalid @endif">{{ old('content') }}</textarea>
                                 <label for="content">Énoncé (obligatoire)</label>
                             </div>
                         </div>
@@ -71,54 +86,5 @@
 
 @section('scripts')
     @parent
-    <script>
-        $( () => {
-            
-            let index = 0
-            let questionContainer = $('#questionsContainer')
-            let addQuestion       = $('.addQuestion')
-            let delQuestion       = $('#delQuestion')
-
-            // Initialisation première question
-            createQuestion()
-
-            addQuestion.click(createQuestion)
-            delQuestion.click(destroyQuestion)
-
-
-            function createQuestion () {
-                let toIncrement = {
-                    id: index,
-                    textlabel: 'Question ' + (index + 1)
-                }
-
-                let template = '\
-                <div class="questionGroup" data-questionid="' + toIncrement.id + '">\
-                    <div class="input-field col s12">\
-                        <textarea id="question-' + toIncrement.id + '" name="questions[]" class="materialize-textarea"></textarea>\
-                        <label for="question-' + toIncrement.id + '">' + toIncrement.textlabel + '</label>\
-                    </div>\
-                    <div class="switch col s12">\
-                        <label>\
-                            Faux\
-                            <input type="checkbox" name="answer_' + toIncrement.id + '">\
-                            <span class="lever"></span>\
-                            Vrai\
-                        </label>\
-                    </div>\
-                </div>'
-
-                questionContainer.append(template)
-
-                index++;
-            }
-
-            function destroyQuestion () {
-                index--
-                if (index < 0) index = 0
-                $( '.questionGroup[data-questionid='+ index +']' ).remove()
-            }
-
-        })
-    </script>
+    <script src="{{ URL::asset('js/questions-form.js') }}"></script>
 @endsection

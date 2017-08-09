@@ -20,6 +20,15 @@ label { width: 100%; }
     box-shadow: 0 1px 0 0 #4caf50;
 }
 
+.input-field.invalid:after {
+    content: attr(data-error);
+    display: block;
+    color: red;
+    position: absolute;
+    bottom: 0;
+    font-size: .8rem;
+}
+
 /* icon prefix focus color */
 .input-field .prefix.active {
     color: #4caf50;
