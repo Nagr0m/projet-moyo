@@ -30,3 +30,20 @@ if(!function_exists('selected_fields')) {
 		if( $name == $data ) return $checked;
 	}
 }
+
+if(!function_exists('oldValue')) {
+
+	/**
+	 * Retourne la valeur $value ou la valeur modifiée avant validation de formulaire
+	 * 
+	 * @param  String
+	 * @param  mixed
+	 * @return mixed
+	 */
+	function oldValue($field, $value)
+	{
+		if(old($field)) return old($field);
+
+		return $value;
+	}
+}

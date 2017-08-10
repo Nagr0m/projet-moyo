@@ -83,7 +83,7 @@ class QuestionController extends Controller
         # Update des données de score
         $this->publishQuestion($questionnaire);
         
-        return redirect()->route('questions.index');
+        return redirect()->route('questions.index')->with('message', 'Le questionnaire a bien été créé');
     }
 
     /**
@@ -92,9 +92,9 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Question $question)
     {
-        //
+        return view('teacher.questions_edit', compact('question'));
     }
 
     /**
@@ -104,9 +104,34 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, Question $question)
+    {   
+        # Validation du formulaire
+        $this->validate($request, [
+            'content'     => 'required|string',
+            'published'   => 'required',
+            'class_level' => 'required',
+            'questions.*' => 'required'
+        ], [
+            'required' => 'Ce champ est obligatoire'
+        ]);
+
+        # Traitement du questionnaire
+        $question->update($request->all());
+
+        # Traitement des questions
+        foreach ($question->choices as $choice)
+        {   
+            $choice->update([
+                'content' => $request->question[$choice->id],
+                'answer'  => isset($request->answer[$choice->id]) ? 'yes' : 'no'
+            ]);
+        }
+
+        # Update des données de score
+        $this->publishQuestion($question);
+        
+        return redirect()->route('questions.index')->with('message', 'Le questionnaire a été mis à jour');
     }
 
     /**
@@ -127,7 +152,10 @@ class QuestionController extends Controller
      * @return void
      */
     protected function publishQuestion (Question $question)
-    {
+    {   
+        # Supprime les données de score existantes
+        Score::where('question_id', $question->id)->delete();
+
         if ($question->published)
         {
             $scores = Score::where('question_id', $question->id)->get();
@@ -146,11 +174,6 @@ class QuestionController extends Controller
                 }
             }
 
-        }
-        else
-        {
-            # Supprime les données de score existantes
-            Score::where('question_id', $question->id)->delete();
         }
     }
 }

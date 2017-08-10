@@ -39,6 +39,13 @@
                 $('select').material_select()
             })
         </script>
+
+        @if(Session::get('message'))
+            <script>
+                var message = "<?php echo Session::get('message');?>";
+                Materialize.toast(message, 4000, 'rounded');
+            </script>
+	    @endif
     @show
 </body>
 </html>
