@@ -10,7 +10,12 @@
             <p>
                 <a href="{{ route('questions.edit', $question->id) }}">
                     {{ $question->content }}
-                </a> @if($question->published) published @else unpublished @endif
+                </a> @if($question->published) published @else unpublished @endif 
+                <form action="{{ route('questions.destroy', $question->id) }}" method="post">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+                    <a class="destroy" data-resource="ce questionnaire">delete</a>
+                </form>
             </p>
         @empty
             Aucun questionnaire

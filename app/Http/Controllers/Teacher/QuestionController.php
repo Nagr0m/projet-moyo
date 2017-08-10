@@ -142,7 +142,9 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Question::find($id)->delete();
+
+        return redirect()->route('questions.index')->with('message', 'Le questionnaire a été supprimé');
     }
 
     /** 

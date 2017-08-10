@@ -27,23 +27,29 @@
         @yield('content')
     </main>
 
+    {{-- Modale de suppression --}}
+    <div id="confirmMaterial" class="modal bottom-sheet">
+		<div class="modal-content">
+			<h4>Voulez-vous supprimer <span class="modalResource"></span> ?</h4>
+			<p>Cette action est irréversible.</p>
+		</div>
+		<div class="modal-footer">
+			<a style="cursor: pointer;" class="modal-action modal-close waves-effect waves-green btn-flat">Non</a>
+			<a style="cursor: pointer;" id="confirmModal" class="waves-effect red darken-1 white-text btn-flat">Oui</a>
+		</div>
+	</div>
+
     @section('scripts')
         {{-- MaterializeJS & jQuery --}}
         <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
         
-        <script>
-            $( () => {
-                // Initialisation des éléments MaterializeCSS
-                $(".button-collapse").sideNav()
-                $('select').material_select()
-            })
-        </script>
+        <script src="{{ URL::asset('js/teacher-main.js') }}"></script>
 
         @if(Session::get('message'))
             <script>
-                var message = "<?php echo Session::get('message');?>";
-                Materialize.toast(message, 4000, 'rounded');
+                let message = "<?php echo Session::get('message');?>"
+                Materialize.toast(message, 4000, 'rounded')
             </script>
 	    @endif
     @show
