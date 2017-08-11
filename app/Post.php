@@ -8,7 +8,7 @@ class Post extends Model
 {
     protected $dates = ['created_at', 'updated_at', 'published_at'];
 
-    protected $fillable = [];
+    protected $fillable = ['title', 'content', 'abstract', 'url_thumbnail', 'published', 'user_id'];
 
 	public function user() {
 		return $this->belongsTo(User::class);

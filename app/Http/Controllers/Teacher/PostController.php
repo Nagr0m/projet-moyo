@@ -71,11 +71,18 @@ class PostController extends Controller
             $imgPath = public_path('img/posts/') . $imgName;
             $imgURL  = '/img/posts/' . $imgName;
             
-
             $Image->save($imgPath, 100);
-            dd($imgName);
         }
         # Enregistrement de l'article
+        Post::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'url_thumbnail' => isset($imgURL) ? $imgURL : null,
+            'abstract' => isset($request->abstract) ? $request->abstract : '',
+            'user_id' => $request->user()->id
+        ]);
+
+        return redirect()->route('posts.index')->with('message', 'L\'article a bien été créé');
     }
 
     /**
