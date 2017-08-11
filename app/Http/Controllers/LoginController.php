@@ -31,6 +31,15 @@ class LoginController extends Controller
             }
         }
 
+        # Redirection automatique si déjà loggué
+        if (Auth::check())
+        {
+            if (Auth::user()->role === 'teacher')
+                return redirect()->route('teacher/home');
+            
+            return redirect()->route('student/home');
+        }
+
         # Affichage de la page de login
         return view('login');
     }
