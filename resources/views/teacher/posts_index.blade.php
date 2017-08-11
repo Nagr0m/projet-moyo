@@ -36,7 +36,7 @@
                         <p class="page-item col s12 l6">
                             <input type="checkbox" id="{{$post->id}}" class="filled-in" name="item-{{ $post->id }}" value="{{$post->id}}">
                             <label for="{{$post->id}}">
-                                {{ $post->title }}
+                                <a href="{{route('posts.edit', $post->id)}}"> {{ $post->title }}</a>
                                 <br>Créé le {{ $post->created_at->format('d/m/Y') }} par {{ $post->user->username }}
                             </label>
                         </p>
