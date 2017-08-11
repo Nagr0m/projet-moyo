@@ -3,16 +3,16 @@ $( () => {
 
     // Variables pour ajout de question
     let index = 0
-    let questionContainer = $('#questionsContainer')
     let addQuestion       = $('.addQuestion')
     let delQuestion       = $('#delQuestion')
+    let questionContainer = $('#questionsContainer')
 
     // Variables pour validation
-    let form            = $('#questionForm')
     let hasErrors       = false
+    let errorPanel      = $('.frontErrors')
+    let form            = $('#questionForm')
     let contentField    = $('textarea[name=content]')
     let classSelect     = $('select[name=class_level]')
-    let errorPanel      = $('.frontErrors')
 
     // Initialisation première question
     createQuestion()

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Teacher;
 
+use Image;
 use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserInject;
@@ -45,16 +46,36 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
         $this->validate($request, [
             'title'     => 'required|string',
             'content'   => 'required|string',
             'abstract'  => 'string|nullable',
             'published' => 'required',
-            'thumbnail' => 'file|image|max:'.env('MAX_UPLOAD', 2000)
+            'thumbnail' => 'image|max:'.env('MAX_UPLOAD', 2000).'|nullable'
         ], [
-            'required' => 'Ce champ est obligatoire'
+            'required' => 'Ce champ est obligatoire',
+            'image'    => 'Le fichier n\'est pas une image valide',
+            'max'      => 'L\'image est trop grande (max: 2mo)'
         ]);
+
+        # Traitement de l'image
+        if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid())
+        {   
+            $Image = Image::make($request->thumbnail)->resize(800, 800, function ($constraint) {
+                $constraint->aspectRatio(); # Respecte le ratio
+                $constraint->upsize(); # Évite le upsize si image plus petite que 800*800
+            });
+            
+            $imgName = str_random(12) . '.' . $request->thumbnail->extension();
+            $imgPath = public_path('img/posts/') . $imgName;
+            $imgURL  = '/img/posts/' . $imgName;
+            
+
+            $Image->save($imgPath, 100);
+            dd($imgName);
+        }
+        # Enregistrement de l'article
     }
 
     /**

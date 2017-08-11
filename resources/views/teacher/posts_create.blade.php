@@ -25,7 +25,7 @@
                 </div>
             @endif
 
-            <form method="post" action="{{ route('posts.store') }}" id="postForm">
+            <form method="post" action="{{ route('posts.store') }}" id="postForm" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <section class="col s12 m4 push-m8">
                     <div class="panel">
@@ -33,7 +33,7 @@
                             <div class="col s12" id="thumbnailUpload">
                                 <h6>Image principale <i class="material-icons red-text right btn-flat" id="imageClear" style="display:none">delete</i></h6>
                                 <img class="materialboxed" src="">
-                                <div class="file-field input-field">
+                                <div class="file-field input-field @if($errors->has('thumbnail')) invalid @endif" data-error="{{ $errors->first('thumbnail') }}">
                                     <div class="btn green z-depth-0">
                                         <span>Importer</span>
                                         <input type="file" name="thumbnail">
@@ -50,7 +50,7 @@
                                 </select>
                                 <label for="published">Statut (obligatoire)</label>
                             </div>
-                            <div class="inpute-field col s12 center-align">
+                            <div class="input-field col s12 center-align">
                                 <button type="submit" class="btn green z-depth-0">Enregistrer</button>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                         <div class="panel-content col s12">
                             <div class="row">
                                 <div class="input-field col s12 @if($errors->has('title')) invalid @endif" data-error="{{$errors->first('title')}}">
-                                    <input type="text" name="title" id="title" @if($errors->has('title')) class="invalid" @endif >
+                                    <input type="text" name="title" id="title" @if($errors->has('title')) class="invalid" @endif value="{{ old('title') }}">
                                     <label for="title">Titre de l'article (obligatoire)</label>
                                 </div>
                                 <div class="input-field col s12 @if($errors->has('content')) invalid @endif" data-error="{{$errors->first('content')}}">
@@ -73,7 +73,7 @@
                                     <label for="content">Article (obligatoire)</label>
                                 </div>
                                 <div class="input-field col s12 @if($errors->has('abstract')) invalid @endif" data-error="{{$errors->first('abstract')}}">
-                                    <input type="text" name="abstract" id="abstract">
+                                    <input type="text" name="abstract" id="abstract" value="{{ old('abstract') }}">
                                     <label for="abstract">Extrait</label>
                                 </div>
                                 <p class="col s12">L'extrait est affiché sur l'accueil du site et la liste des articles. Laisser vide pour un extrait automatique.</p>
@@ -91,36 +91,5 @@
 @section('scripts')
     @parent
 
-    <script>
-        $(() => {
-            // Variables pour image preview
-            let imageContainer = $('#thumbnailUpload')
-            let imageField     = imageContainer.find('input[type=file]')
-            let imagePreview   = imageContainer.find('.materialboxed')
-            let imageClear     = imageContainer.find('#imageClear')
-            let imageName      = imageContainer.find('input.file-path')
-
-            // Events
-            imageField.on('change', liveImgPreview)
-            imageClear.click(clearImg)
-
-            // Aperçu d'image en direct
-            function liveImgPreview () {
-                let files = $(this)[0].files
-
-                if (files.length > 0) {
-                    let file = files[0]
-                    imagePreview.attr('src', window.URL.createObjectURL(file))
-                    imageClear.show()
-                }
-            }
-            // Suppression de l'image
-            function clearImg () {
-                imagePreview.attr('src', '')
-                imageField.val('')
-                imageName.val('')
-                $(this).hide()
-            }
-        })
-    </script>
+    <script src="{{ URL::asset('js/posts-form.js') }}"></script>
 @endsection
