@@ -9,17 +9,28 @@ label { width: 100%; }
 /* Change all inputs colors */
 
 /* label focus color */
-.input-field input:not(.browser-default):focus:not([readonly]) + label 
+.input-field input:not(.browser-default):focus:not([readonly]) + label, 
+.input-field textarea.materialize-textarea:focus:not([readonly]) + label
 {
     color: #4caf50;
 }
 /* label underline focus color */
-.input-field input:not(.browser-default):focus:not([readonly]) 
+.input-field input:not(.browser-default):focus:not([readonly]), 
+.input-field textarea.materialize-textarea:focus:not([readonly])
 {
     border-bottom: 1px solid #4caf50;
     box-shadow: 0 1px 0 0 #4caf50;
 }
-
+.switch label input[type=checkbox]:checked+.lever {
+    background-color: #a5d6a7;
+}
+input[type=checkbox]:checked:not(:disabled) ~ .lever:active::before, input[type=checkbox]:checked:not(:disabled).tabbed:focus ~ .lever::before {
+    background-color: rgba(38, 166, 72, 0.15);
+}
+.switch label input[type=checkbox]:checked+.lever:after {
+   background-color: #4caf50; 
+}
+/* Errors display on fields */
 .input-field.invalid:after {
     content: attr(data-error);
     display: block;

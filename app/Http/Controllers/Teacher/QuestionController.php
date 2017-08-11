@@ -9,6 +9,7 @@ use App\Question;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserInject;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\QuestionaryRequest;
 
 class QuestionController extends Controller
 {   
@@ -44,21 +45,11 @@ class QuestionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\QuestionaryRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QuestionaryRequest $request)
     {   
-        # Validation du formulaire
-        $this->validate($request, [
-            'content'     => 'required|string',
-            'published'   => 'required',
-            'class_level' => 'required',
-            'questions.*' => 'required'
-        ], [
-            'required' => 'Ce champ est obligatoire'
-        ]);
-
         # Redirection si aucune question enregistrée
         if (count($request->questions) === 0)
             return redirect('teacher/questions/create')->withErrors(['message' => 'Vous devez au moins écrire une question.']);
@@ -89,7 +80,7 @@ class QuestionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Question $question
      * @return \Illuminate\Http\Response
      */
     public function edit(Question $question)
@@ -100,22 +91,12 @@ class QuestionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\QuestionaryRequest  $request
+     * @param  \App\Question $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(QuestionaryRequest $request, Question $question)
     {   
-        # Validation du formulaire
-        $this->validate($request, [
-            'content'     => 'required|string',
-            'published'   => 'required',
-            'class_level' => 'required',
-            'questions.*' => 'required'
-        ], [
-            'required' => 'Ce champ est obligatoire'
-        ]);
-
         # Traitement du questionnaire
         $question->update($request->all());
 
@@ -150,7 +131,7 @@ class QuestionController extends Controller
     /** 
      * Ajoute les données de score pour chaque étudiant si questionnaire publié
      *
-     * @param Question $question
+     * @param \App\Question $question
      * @return void
      */
     protected function publishQuestion (Question $question)
@@ -160,14 +141,13 @@ class QuestionController extends Controller
 
         if ($question->published)
         {
-            $scores = Score::where('question_id', $question->id)->get();
-
-            if (count($scores) === 0)
+            $students = User::select('id')->where('level', $question->class_level)->get();
+            
+            if (count($students) > 0) 
             {
-                $students = User::select('id')->where('level', $question->class_level)->get();
-
                 foreach ($students as $student)
-                {
+                {   
+                    # Insère les données de score pour chaque étudiant
                     Score::create([
                         'user_id'     => $student->id,
                         'question_id' => $question->id,
@@ -175,7 +155,6 @@ class QuestionController extends Controller
                     ]);
                 }
             }
-
         }
     }
 }

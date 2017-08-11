@@ -5,7 +5,7 @@
                 <li><a href="#" data-activates="side-nav" class="button-collapse"><i class="material-icons">menu</i></a></li>
                 <li class="hide-on-med-and-down">
                     <a href="{{ route('home') }}" class="btn-flat">
-                        <i class="material-icons left">navigate_before</i>Retour au site
+                        <i class="material-icons left">navigate_before</i>Retour au site public
                     </a>
                 </li>
             </ul>

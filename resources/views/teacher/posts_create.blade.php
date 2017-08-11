@@ -36,7 +36,7 @@
                                 <div class="file-field input-field">
                                     <div class="btn green z-depth-0">
                                         <span>Importer</span>
-                                        <input type="file" name="thumbnail_url">
+                                        <input type="file" name="thumbnail">
                                     </div>
                                     <div class="file-path-wrapper">
                                         <input class="file-path validate" type="text">

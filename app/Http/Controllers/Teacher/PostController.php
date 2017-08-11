@@ -46,7 +46,15 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'title'     => 'required|string',
+            'content'   => 'required|string',
+            'abstract'  => 'string|nullable',
+            'published' => 'required',
+            'thumbnail' => 'file|image|max:'.env('MAX_UPLOAD', 2000)
+        ], [
+            'required' => 'Ce champ est obligatoire'
+        ]);
     }
 
     /**
