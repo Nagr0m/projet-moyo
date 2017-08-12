@@ -3,6 +3,7 @@ $( () => {
 
     // Variables pour image preview
     let imageContainer = $('#thumbnailUpload')
+    let oldImgField    = $('input[name=oldThumbnail]')
     let imageClear     = imageContainer.find('#imageClear')
     let imagePreview   = imageContainer.find('.materialboxed')
     let imageName      = imageContainer.find('input.file-path')
@@ -35,6 +36,7 @@ $( () => {
             let file = files[0]
             imagePreview.attr('src', window.URL.createObjectURL(file))
             imageClear.show()
+            oldImgField.val('')
         }
     }
     // Suppression de l'image
@@ -42,6 +44,7 @@ $( () => {
         imagePreview.attr('src', '')
         imageField.val('')
         imageName.val('')
+        oldImgField.val('')
         $(this).hide()
     }
 

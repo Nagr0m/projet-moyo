@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Teacher;
 
+use File;
 use Image;
 use App\Post;
 use Illuminate\Http\Request;
+use App\Http\Requests\PostRequest;
 use App\Http\Controllers\UserInject;
 use App\Http\Controllers\Controller;
 
@@ -24,7 +26,7 @@ class PostController extends Controller
      */
     public function index()
     {   
-        $posts = Post::all();
+        $posts = Post::orderBy('created_at', 'desc')->get();
 
         return view('teacher.posts_index', compact('posts'));
     }
@@ -42,23 +44,11 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\PostRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {   
-        $this->validate($request, [
-            'title'     => 'required|string',
-            'content'   => 'required|string',
-            'abstract'  => 'string|nullable',
-            'published' => 'required',
-            'thumbnail' => 'image|max:'.env('MAX_UPLOAD', 2000).'|nullable'
-        ], [
-            'required' => 'Ce champ est obligatoire',
-            'image'    => 'Le fichier n\'est pas une image valide',
-            'max'      => 'L\'image est trop grande (max: 2mo)'
-        ]);
-
         # Traitement de l'image
         if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid())
         {   
@@ -75,11 +65,11 @@ class PostController extends Controller
         }
         # Enregistrement de l'article
         Post::create([
-            'title' => $request->title,
-            'content' => $request->content,
+            'title'         => $request->title,
+            'content'       => $request->content,
             'url_thumbnail' => isset($imgURL) ? $imgURL : null,
-            'abstract' => isset($request->abstract) ? $request->abstract : '',
-            'user_id' => $request->user()->id
+            'abstract'      => isset($request->abstract) ? $request->abstract: '',
+            'user_id'       => $request->user()->id
         ]);
 
         return redirect()->route('posts.index')->with('message', 'L\'article a bien été créé');
@@ -99,24 +89,56 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('teacher.posts_edit', compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\PostRequest  $request
+     * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(PostRequest $request, Post $post)
+    {   
+        $imgURL = $post->url_thumbnail;
+
+        # Traitement de l'ancienne image
+        if ($post->url_thumbnail && is_null($request->oldThumbnail) && File::exists(public_path($post->url_thumbnail)))
+        {
+            File::delete(public_path($post->url_thumbnail));
+            $imgURL = null;
+        }
+
+        # Traitement de l'image
+        if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid())
+        {
+            $Image = Image::make($request->thumbnail)->resize(800, 800, function ($constraint) {
+                $constraint->aspectRatio(); # Respecte le ratio
+                $constraint->upsize(); # Évite le upsize si image plus petite que 800*800
+            });
+            
+            $imgName = str_random(12) . '.' . $request->thumbnail->extension();
+            $imgPath = public_path('img/posts/') . $imgName;
+            $imgURL  = '/img/posts/' . $imgName;
+            
+            $Image->save($imgPath, 100);
+        }
+
+        # Mise à jour de l'article
+        $post->update([
+            'title'         => $request->title,
+            'content'       => $request->content,
+            'url_thumbnail' => $imgURL,
+            'abstract'      => $request->abstract
+        ]);
+
+        return redirect()->route('posts.index')->with('message', 'L\'article a été mis à jour');
     }
 
     /**
