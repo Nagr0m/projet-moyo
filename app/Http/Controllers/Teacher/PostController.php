@@ -109,9 +109,11 @@ class PostController extends Controller
         $imgURL = $post->url_thumbnail;
 
         # Traitement de l'ancienne image
-        if ($post->url_thumbnail && is_null($request->oldThumbnail) && File::exists(public_path($post->url_thumbnail)))
+        if ($post->url_thumbnail && is_null($request->oldThumbnail))
         {
-            File::delete(public_path($post->url_thumbnail));
+            if (File::exists(public_path($post->url_thumbnail)))
+                File::delete(public_path($post->url_thumbnail));
+            
             $imgURL = null;
         }
 
