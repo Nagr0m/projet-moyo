@@ -144,11 +144,18 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Post $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Post $post)
+    {   
+        if ($post->url_thumbnail && File::exists(public_path($post->url_thumbnail)))
+        {
+            File::delete(public_path($post->url_thumbnail));
+        }
+
+        $post->delete();
+
+        return redirect()->route('posts.index')->with('message', 'L\'article a été supprimé');
     }
 }

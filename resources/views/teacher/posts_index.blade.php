@@ -39,6 +39,11 @@
                                 <a href="{{route('posts.edit', $post->id)}}"> {{ $post->title }}</a>
                                 <br>Créé le {{ $post->created_at->format('d/m/Y') }} par {{ $post->user->username }}
                             </label>
+                            <form action="{{ route('posts.destroy', $post->id) }}" method="post">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                                <a class="destroy" data-resource="cet article">delete</a>
+                            </form>
                         </p>
                         @empty
                             Aucun post
