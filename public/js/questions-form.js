@@ -36,25 +36,24 @@ $( () => {
             textlabel: 'Question ' + (index + 1)
         }
 
-        let template = '\
-        <div class="questionGroup" data-questionid="' + toIncrement.id + '">\
-            <div class="input-field col s12">\
-                <textarea id="question-' + toIncrement.id + '" name="questions[]" class="materialize-textarea"></textarea>\
-                <label for="question-' + toIncrement.id + '">' + toIncrement.textlabel + '</label>\
-            </div>\
-            <div class="switch col s12">\
-                <label>\
-                    Faux\
-                    <input type="checkbox" name="answer_' + toIncrement.id + '">\
-                    <span class="lever"></span>\
-                    Vrai\
-                </label>\
-            </div>\
-        </div>'
-
+        let template = `
+            <div class="questionGroup" data-questionid="${ toIncrement.id }">
+                <div class="input-field col s12">
+                    <textarea id="question-${ toIncrement.id }" name="questions[]" class="materialize-textarea"></textarea>
+                    <label for="question-${ toIncrement.id }">${ toIncrement.textlabel }</label>
+                </div>
+                <div class="switch col s12">
+                    <label>
+                        Faux
+                        <input type="checkbox" name="answer_${ toIncrement.id }">
+                        <span class="lever"></span>
+                        Vrai
+                    </label>
+                </div>
+            </div>
+        `
         questionContainer.append(template)
-
-        index++;
+        index++
     }
 
     // Suppression de question
