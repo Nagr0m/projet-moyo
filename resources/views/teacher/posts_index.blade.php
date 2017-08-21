@@ -28,29 +28,57 @@
                     <div class="divider"></div>
                     <div class="panel-content row">
                         <p class="col s12">
-                            <input type="checkbox" class="filled-in" id="checkToggle">
-                            <label for="checkToggle">Tout sélectioner</label>
+                        
                         </p>
                         <div class="divider"></div>
+                        @if(count($posts) > 0)
+                            <table class="bordered responsive-resources">
+                                <thead>
+                                    <th class="center-align">
+                                        <input type="checkbox" class="filled-in" id="checkToggle">
+                                        <label for="checkToggle">&nbsp;</label>
+                                    </th>
+                                    <th>Titre</th>
+                                    <th>Infos</th>
+                                    <th>Commentaires</th>
+                                    <th>Publié</th>
+                                </thead>
+                                <tbody>
+                        @endif
                         @forelse($posts as $post)
-                        <p class="page-item col s12 l6">
-                            <input type="checkbox" id="{{$post->id}}" class="filled-in" name="item-{{ $post->id }}" value="{{$post->id}}">
-                            <label for="{{$post->id}}">
-                                <a href="{{route('posts.edit', $post->id)}}"> {{ $post->title }}</a>
-                                <br>Créé le {{ $post->created_at->format('d/m/Y') }} par {{ $post->user->username }}
-                            </label>
-                            <form action="{{ route('posts.destroy', $post->id) }}" method="post">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
-                                <a class="destroy" data-resource="cet article">delete</a>
-                            </form>
-                        </p>
+                            <tr id="{{$post->id}}">
+                                <td>
+                                    <input type="checkbox" id="check{{$post->id}}" class="filled-in" name="items[]" value="{{$post->id}}">
+                                    <label for="check{{$post->id}}">&nbsp;</label>
+                                </td>
+                                <td>
+                                    <a href="{{ route('posts.edit', $post->id) }}">{{$post->title}}</a>
+                                </td>
+                                <td>
+                                    Le <b>{{ $post->created_at->format('d/m/Y') }}</b> par <b>{{ $post->user->username }}</b>
+                                </td>
+                                <td>
+                                    {{ count($post->comments) }}
+                                </td>
+                                <td>
+                                    @if($post->published) Publié @else Non publié @endif
+                                </td>
+                            </tr>
                         @empty
                             Aucun post
                         @endforelse
+
+                        @if(count($posts) > 0)
+                                </tbody>
+                            </table>
+                        @endif
                     </div>
                 </div>
             </section>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    @parent
 @endsection

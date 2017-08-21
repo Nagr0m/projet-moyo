@@ -179,3 +179,19 @@ header, main, footer {
         line-height: 64px;
     }
 }
+/* Responsive tables */
+@media only screen and (max-width : 720px) {
+    .responsive-resources thead {
+        display: none;
+    }
+    .responsive-resources td:not(:first-child) {
+        display: block;
+        padding: 3px;
+    }
+    .responsive-resources td:first-child {
+        float: left;
+    }
+    .responsive-resources td:nth-child(4), .responsive-resources td:nth-child(5) {
+        float: right;
+    }
+}
