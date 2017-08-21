@@ -24,6 +24,7 @@ class QuestionaryRequest extends FormRequest
     public function rules()
     {
         return [
+            'title'       => 'required|string',  
             'content'     => 'required|string',
             'published'   => 'required',
             'class_level' => 'required',

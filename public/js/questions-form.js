@@ -11,6 +11,7 @@ $( () => {
     let hasErrors       = false
     let errorPanel      = $('.frontErrors')
     let form            = $('#questionForm')
+    let titleField      = $('input[name=title]')
     let contentField    = $('textarea[name=content]')
     let classSelect     = $('select[name=class_level]')
 
@@ -68,6 +69,9 @@ $( () => {
         hideAllErrors()
         let questionsFields = $('.questionGroup .input-field > textarea')
         
+        if (titleField.val() === '')
+            displayError(titleField, 'Ce champ ne peut pas être vide')
+
         if (contentField.val() === '')
             displayError(contentField, 'Ce champ ne peut pas être vide')
 

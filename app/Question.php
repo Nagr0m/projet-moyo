@@ -8,7 +8,7 @@ class Question extends Model
 {
 	protected $dates = ['created_at', 'updated_at'];
 
-	protected $fillable = ['content', 'class_level', 'published'];
+	protected $fillable = ['title', 'content', 'class_level', 'published'];
 
 	public function choices() {
 		return $this->hasMany(Choice::class);
