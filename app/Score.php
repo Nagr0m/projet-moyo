@@ -11,11 +11,11 @@ class Score extends Model
 	protected $fillable = ['user_id', 'question_id', 'done'];
 
 	public function question() {
-		return $this->belongTo(Question::class);
+		return $this->belongsTo(Question::class);
 	}
 
 	public function user() {
-		return $this->belongTo(User::class);
+		return $this->belongsTo(User::class);
 	}
 
 	public function scopePublished($query) {
