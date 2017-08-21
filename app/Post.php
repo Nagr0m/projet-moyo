@@ -18,12 +18,6 @@ class Post extends Model
 		return $this->hasMany(Comment::class);
 	}
 
-	public function setPublishedAttribute ($value)
-	{
-		$this->attributes['published'] = $value;
-		$this->attributes['published_at'] = ($value === '1') ? \Carbon\Carbon::now() : null;
-	}
-
 	public function scopePublished($query) {
 		return $query->where('published', true)->orderby('published_at', 'DESC');
 	}
