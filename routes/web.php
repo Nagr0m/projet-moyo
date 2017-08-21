@@ -34,7 +34,9 @@ Route::namespace('Teacher')->prefix('teacher')->middleware(['auth', 'role:teache
 
     })->name('students.index');
     Route::resource('posts', 'PostController');
+    Route::match(['put', 'patch'], 'multiple/posts', 'PostController@multiplePatch')->name('posts.multiple');
     Route::resource('questions', 'QuestionController');
+    Route::match(['put', 'patch'], 'multiple/questions', 'QuestionController@multiplePatch')->name('questions.multiple');
 
 });
 

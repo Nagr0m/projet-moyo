@@ -64,26 +64,16 @@ class PostController extends Controller
             $Image->save($imgPath, 100);
         }
         # Enregistrement de l'article
-        Post::create([
+        $post = Post::create([
             'title'         => $request->title,
             'content'       => $request->content,
             'url_thumbnail' => isset($imgURL) ? $imgURL : null,
             'abstract'      => isset($request->abstract) ? $request->abstract: '',
-            'user_id'       => $request->user()->id
+            'user_id'       => $request->user()->id,
+            'published'     => $request->published
         ]);
 
         return redirect()->route('posts.index')->with('message', 'L\'article a bien été créé');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -137,9 +127,10 @@ class PostController extends Controller
             'title'         => $request->title,
             'content'       => $request->content,
             'url_thumbnail' => $imgURL,
-            'abstract'      => $request->abstract
+            'abstract'      => $request->abstract,
+            'published'     => $request->published
         ]);
-
+            
         return redirect()->route('posts.index')->with('message', 'L\'article a été mis à jour');
     }
 
@@ -159,5 +150,33 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->route('posts.index')->with('message', 'L\'article a été supprimé');
+    }
+
+    /**
+     * Mass posts updating
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function multiplePatch (Request $request)
+    {
+        $this->validate($request, [
+            'operation' => 'required|string',
+            'items'     => 'required|array'
+        ]);
+
+        if ($request->operation === 'delete')
+        {
+            Post::destroy($request->items);
+            $message = 'Les articles ont été supprimés';
+        }
+        else 
+        {
+            foreach ($request->items as $itemId)
+                Post::where('id', $itemId)->update(['published' => ($request->operation === 'publish')]);
+            $message = 'Le statut des articles a été mis à jour';
+        }
+
+        return redirect()->route('posts.index')->with('message', $message);
     }
 }

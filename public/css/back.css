@@ -30,6 +30,13 @@ input[type=checkbox]:checked:not(:disabled) ~ .lever:active::before, input[type=
 .switch label input[type=checkbox]:checked+.lever:after {
    background-color: #4caf50; 
 }
+.filled-in[type="checkbox"]:checked + label::after {
+    border: 2px solid #4caf50;
+    background-color: #4caf50;
+}
+.dropdown-content li > a, .dropdown-content li > span {
+    color: #4caf50;
+}
 /* Errors display on fields */
 .input-field.invalid:after {
     content: attr(data-error);

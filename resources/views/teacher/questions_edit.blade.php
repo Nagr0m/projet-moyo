@@ -59,6 +59,10 @@
                         </div>
                         <div class="divider"></div>
                         <div class="panel-content">
+                            <div class="input-field col s12 @if($errors->has('title'))invalid @endif" data-error="{{$errors->first('title')}}">
+                                <input type="text" name="title" id="title" value="{{ oldValue('title', $question->title) }}">
+                                <label for="title">Titre (obligatoire)</label>
+                            </div>
                             <div class="input-field col s12 @if($errors->has('content')) invalid @endif" data-error="{{$errors->first('content')}}">
                                 <textarea id="content" name="content" class="materialize-textarea @if($errors->has('content')) invalid @endif">{{ oldValue('content', $question->content) }}</textarea>
                                 <label for="content">Énoncé (obligatoire)</label>

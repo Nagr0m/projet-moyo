@@ -128,6 +128,11 @@ class QuestionController extends Controller
         return redirect()->route('questions.index')->with('message', 'Le questionnaire a été supprimé');
     }
 
+    public function multiplePatch (Request $request)
+    {
+        
+    }
+
     /** 
      * Ajoute les données de score pour chaque étudiant si questionnaire publié
      *
