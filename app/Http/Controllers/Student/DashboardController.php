@@ -15,17 +15,12 @@ class DashboardController extends Controller
         $this->setUser();
     }
 
-    public function index()
+    public function index(Request $request)
     {
-    	$user = \Auth::user();
-    	$scores = \App\Score::where('user_id', $user->id)->get();
-    	$questions = \App\Question::with('scores')->where('class_level', $user->level)->published();
-    	$questionsAll = $questions->get();
-    	$questionsDone = $questions->whereHas('scores', function ($query) { $query->where('user_id', \Auth::user()->id); })->get();
-    	$questionsToDo = $questions->whereDoesntHave('scores', function ($query) { $query->where('user_id', \Auth::user()->id); })->get();
+    	$scores = \App\Score::with('question')->where('user_id', $request->user()->id)->get();
 
-    	dd($questionsAll, $questionsDone, $questionsToDo);
+    	// dd($request->user());
 
-    	return view('student.dashboard', compact('questionsAll', 'questionsDone', 'scores'));
+    	return view('student.dashboard', compact('scores'));
     }
 }

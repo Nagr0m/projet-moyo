@@ -42,6 +42,8 @@ Route::namespace('Teacher')->prefix('teacher')->middleware(['auth', 'role:teache
 Route::namespace('Student')->prefix('student')->middleware(['auth', 'role:student'])->group(function () {
 
     Route::get('dashboard', 'DashboardController@index')->name('student/home');
-    Route::get('questions', 'DashboardController@questions')->name('student/questions');
+    Route::get('questions', 'QuestionController@index')->name('student/questions');
+    Route::get('question/{id}', 'QuestionController@answer')->name('student/question');
+
 
 });
