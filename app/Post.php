@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    protected $dates = ['created_at', 'updated_at', 'published_at'];
+    protected $dates = ['created_at', 'updated_at'];
 
     protected $fillable = ['title', 'content', 'abstract', 'url_thumbnail', 'published', 'user_id'];
 
@@ -19,6 +19,6 @@ class Post extends Model
 	}
 
 	public function scopePublished($query) {
-		return $query->where('published', true)->orderby('published_at', 'DESC');
+		return $query->where('published', true)->orderby('created_at', 'DESC');
 	}
 }
