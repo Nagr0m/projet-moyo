@@ -13,8 +13,8 @@
 
 # Front
 Route::get('/', 'FrontController@home')->name('home');
-Route::get('actus', 'FrontController@actus')->name('actus');
-Route::get('actu/{id}', 'FrontController@actu')->name('actu');
+Route::get('actus', 'FrontController@postsIndex')->name('actus');
+Route::get('actu/{id}', 'FrontController@postSingle')->name('actu');
 Route::get('lycee', 'FrontController@lycee')->name('lycee');
 Route::get('mentionslegales', 'FrontController@mentionslegales')->name('mentionslegales');
 
@@ -28,24 +28,23 @@ Route::get('logout', 'LoginController@logout')->name('logout');
 
 # Teacher back-office group
 Route::namespace('Teacher')->prefix('teacher')->middleware(['auth', 'role:teacher'])->group(function () {
-    
-    Route::get('dashboard', 'DashboardController@index')->name('teacher/home');
-    Route::get('students', function () {
 
-    })->name('students.index');
+    Route::get('dashboard', 'DashboardController@index')->name('teacher/home');
+    # Resources routes
     Route::resource('posts', 'PostController');
-    Route::match(['put', 'patch'], 'multiple/posts', 'PostController@multiplePatch')->name('posts.multiple');
     Route::resource('questions', 'QuestionController');
+    # Mass updating
+    Route::match(['put', 'patch'], 'multiple/posts', 'PostController@multiplePatch')->name('posts.multiple');
     Route::match(['put', 'patch'], 'multiple/questions', 'QuestionController@multiplePatch')->name('questions.multiple');
 
+    Route::get('students', function () {
+        
+    })->name('students.index');
 });
 
 # Student access
 Route::namespace('Student')->prefix('student')->middleware(['auth', 'role:student'])->group(function () {
-
     Route::get('dashboard', 'DashboardController@index')->name('student/home');
     Route::get('questions', 'QuestionController@index')->name('student/questions');
     Route::get('question/{id}', 'QuestionController@answer')->name('student/question');
-
-
 });

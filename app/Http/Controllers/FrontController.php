@@ -2,25 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Post;
 use Illuminate\Http\Request;
+use App\Http\Controllers\UserInject;
 
 class FrontController extends Controller
 {
-	public function home()
+	use UserInject;
+
+	public function __construct ()
 	{
+		$this->setUser();
+	}
+
+	public function home()
+	{	
 		$posts = Post::with('user')->withCount('comments')->published()->take(3)->get();
 		return view('front.home', compact('posts'));
 	}
 
-	public function actus()
+	public function postsIndex()
 	{
 		// dd(Post::with('user')->published()->paginate(10));
 		$posts = Post::with('user')->withCount('comments')->published()->paginate(5);
 		return view('front.actus', compact('posts'));
 	}
 
-	public function actu($id)
+	public function postSingle($id)
 	{
 		$post = Post::with('user', 'comments')->findOrFail($id);
 		return view('front.actu', compact('post'));

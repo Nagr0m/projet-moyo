@@ -7,26 +7,31 @@
 
 	<title>MoYo - @yield('title')</title>
 
-	<!-- Styles -->
+	{{-- Normalize and Grid layout --}}
+	<link rel="stylesheet" href="{{ URL::asset('utils/css/normalize.min.css') }}">
 	<link rel="stylesheet" href="{{ URL::asset('css/grillade.css') }}">
+	{{-- Main CSS --}}
 	<link rel="stylesheet" href="{{ URL::asset('css/front.css') }}">
-
 </head>
 <body>
-	<header class="header">
-		@include('partials.front_header')
-	</header>
-	
-	<div class="container">
-		<div class="grid">
-			<div class="content three-quarters">
+	@include('partials.front_header')
+
+
+	<div class="grid">
+
+		<main class="content three-quarters">
+			<div class="container">
 				@yield('content')
 			</div>
-			<aside class="sidebar one-quarter">
-				@include('partials.sidebar')
-			</aside>
-		</div>
+		</main>
+		
+		<aside class="sidebar one-quarter">
+			<div class="container">
+			@include('partials.sidebar')
+			</div>
+		</aside>
 	</div>
+
 
 	@include('partials.footer')
 

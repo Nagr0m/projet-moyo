@@ -4,7 +4,6 @@
 
 
 @section('content')
-	<p>This is the content.</p>
 	@forelse ($posts as $post)
 		<div>
 			<h3>{{ $post->title }}</h3>
