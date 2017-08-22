@@ -70,7 +70,7 @@
                                                 <a href="{{ route('posts.edit', $post->id) }}">{{$post->title}}</a>
                                             </td>
                                             <td>
-                                                Le <b>{{ $post->created_at->format('d/m/Y') }}</b> par <b>{{ $post->user->username }}</b>
+                                                Le <b>{{ $post->created_at }}</b> par <b>{{ $post->user->username }}</b>
                                             </td>
                                             <td>
                                                 <i class="material-icons left">chat</i>

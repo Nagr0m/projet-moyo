@@ -75,7 +75,7 @@
                                                     <a href="{{ route('questions.edit', $question->id) }}">{{ $question->title }}</a>
                                                 </td>
                                                 <td>
-                                                    <b>{{ $question->created_at->format('d/m/Y') }}</b>
+                                                    <b>{{ $question->created_at }}</b>
                                                 </td>
                                                 <td>
                                                     <i class="material-icons left">people</i>
