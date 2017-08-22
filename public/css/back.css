@@ -6,37 +6,6 @@ html, body, .full-height {
 /* Error messages fix */
 label { width: 100%; }
 
-/* Change all inputs colors */
-
-/* label focus color */
-.input-field input:not(.browser-default):focus:not([readonly]) + label, 
-.input-field textarea.materialize-textarea:focus:not([readonly]) + label
-{
-    color: #4caf50;
-}
-/* label underline focus color */
-.input-field input:not(.browser-default):focus:not([readonly]), 
-.input-field textarea.materialize-textarea:focus:not([readonly])
-{
-    border-bottom: 1px solid #4caf50;
-    box-shadow: 0 1px 0 0 #4caf50;
-}
-.switch label input[type=checkbox]:checked+.lever {
-    background-color: #a5d6a7;
-}
-input[type=checkbox]:checked:not(:disabled) ~ .lever:active::before, input[type=checkbox]:checked:not(:disabled).tabbed:focus ~ .lever::before {
-    background-color: rgba(38, 166, 72, 0.15);
-}
-.switch label input[type=checkbox]:checked+.lever:after {
-   background-color: #4caf50; 
-}
-.filled-in[type="checkbox"]:checked + label::after {
-    border: 2px solid #4caf50;
-    background-color: #4caf50;
-}
-.dropdown-content li > a, .dropdown-content li > span {
-    color: #4caf50;
-}
 /* Errors display on fields */
 .input-field.invalid:after {
     content: attr(data-error);
@@ -45,11 +14,6 @@ input[type=checkbox]:checked:not(:disabled) ~ .lever:active::before, input[type=
     position: absolute;
     bottom: 0;
     font-size: .8rem;
-}
-
-/* icon prefix focus color */
-.input-field .prefix.active {
-    color: #4caf50;
 }
 
 /* Login page style */
@@ -90,7 +54,6 @@ header, main, footer {
     background-size: cover;
 }
 #side-nav .layer {
-    background-color: rgba(96, 187, 100, 0.8);
     position: absolute;
     top: 0;
     left: 0;

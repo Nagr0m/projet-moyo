@@ -10,6 +10,15 @@
     {{-- MaterializeCSS --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    {{-- Color modifications --}}
+    @if (classActivePath('teacher'))
+        <link rel="stylesheet" href="{{ URL::asset('css/teacher.css') }}">
+    @elseif (classActivePath('student'))
+        <link rel="stylesheet" href="{{ URL::asset('css/student.css') }}">
+    @endif
+
+    {{-- Main CSS --}}
     <link rel="stylesheet" href="{{ URL::asset('css/back.css') }}">
 </head>
 <body id="back" class="grey-text text-darken-4">

@@ -1,0 +1,30 @@
+/* Change all inputs colors */
+.input-field input:not(.browser-default):focus:not([readonly]) + label, 
+.input-field textarea.materialize-textarea:focus:not([readonly]) + label
+{
+    color: #00bcd4;
+}
+.input-field input:not(.browser-default):focus:not([readonly]), 
+.input-field textarea.materialize-textarea:focus:not([readonly])
+{
+    border-bottom: 1px solid #00bcd4;
+    box-shadow: 0 1px 0 0 #00bcd4;
+}
+.switch label input[type=checkbox]:checked+.lever {
+    background-color: #56A8B2;
+}
+input[type=checkbox]:checked:not(:disabled) ~ .lever:active::before, input[type=checkbox]:checked:not(:disabled).tabbed:focus ~ .lever::before {
+    background-color: rgba(38, 164, 166, 0.15);
+}
+.switch label input[type=checkbox]:checked+.lever:after {
+   background-color: #00bcd4; 
+}
+.filled-in[type="checkbox"]:checked + label::after {
+    border: 2px solid #00bcd4;
+    background-color: #00bcd4;
+}
+.input-field .prefix.active { color: #00bcd4; }
+.dropdown-content li > a, .dropdown-content li > span {
+    color: #00bcd4;
+}
+#side-nav .layer { background-color: rgba(96, 185, 187, 0.80); }
