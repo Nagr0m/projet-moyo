@@ -27,4 +27,5 @@ input[type=checkbox]:checked:not(:disabled) ~ .lever:active::before, input[type=
 .dropdown-content li > a, .dropdown-content li > span {
     color: #00bcd4;
 }
+#side-nav { background:url('/img/alter_bg.jpg'); }
 #side-nav .layer { background-color: rgba(96, 185, 187, 0.80); }
