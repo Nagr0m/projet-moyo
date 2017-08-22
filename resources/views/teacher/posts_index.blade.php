@@ -13,18 +13,22 @@
                 </div>
             </div>
 
-            <section class="col s12">
-                <div class="panel">
-                    <div class="panel-head">
-                        <div class="light-blue-text">
-                            <i class="material-icons left">description</i>Tous les articles 
-                            <a href="{{ route('posts.create') }}" class="btn-flat z-depth-0"><i class="material-icons left">add</i>Ajouter</a>
-                        </div>
-                        @if (count($posts) > 0)
-                            <form method="post" action="{{ route('posts.multiple') }}" id="massForm">
-                                {{ csrf_field() }}
-                                {{ method_field('PATCH') }}
-                                <input type="hidden" name="resource" value="ces articles">
+            @if (count($posts) > 0)
+                <form method="post" action="{{ route('posts.multiple') }}" id="massForm">
+                    {{ csrf_field() }}
+                    {{ method_field('PATCH') }}
+                    <input type="hidden" name="resource" value="ces articles">
+            @endif
+
+                <section class="col s12">
+                    <div class="panel">
+                        <div class="panel-head">
+                            <div class="light-blue-text">
+                                <i class="material-icons left">description</i>Tous les articles 
+                                <a href="{{ route('posts.create') }}" class="btn-flat z-depth-0"><i class="material-icons left">add</i>Ajouter</a>
+                            </div>
+
+                            @if (count($posts) > 0)
                                 <div class="resource-options valign-wrapper left-align">
                                     <div class="input-field col s6 m3">
                                         <select name="operation">
@@ -38,7 +42,7 @@
                                         <button class="btn green z-depth-0">Appliquer</button>
                                     </div>
                                 </div>
-                        @endif
+                            @endif
                         </div>
                         <div class="divider"></div>
                         <div class="panel-content row">
@@ -55,38 +59,43 @@
                                         <th>Publié</th>
                                     </thead>
                                     <tbody>
+                                
+                                    @foreach ($posts as $post)
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" id="check{{$post->id}}" class="filled-in" name="items[]" value="{{$post->id}}">
+                                                <label for="check{{$post->id}}">&nbsp;</label>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('posts.edit', $post->id) }}">{{$post->title}}</a>
+                                            </td>
+                                            <td>
+                                                Le <b>{{ $post->created_at->format('d/m/Y') }}</b> par <b>{{ $post->user->username }}</b>
+                                            </td>
+                                            <td>
+                                                <i class="material-icons left">chat</i>
+                                                {{ $post->comments_count }}
+                                            </td>
+                                            <td class="@if($post->published) green-text @else red-text @endif">
+                                                <i class="material-icons">label</i>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    
+                                    </tbody>
+                                </table>
+                            @else
+                                Aucun article
                             @endif
-                            @forelse($posts as $post)
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" id="check{{$post->id}}" class="filled-in" name="items[]" value="{{$post->id}}">
-                                        <label for="check{{$post->id}}">&nbsp;</label>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('posts.edit', $post->id) }}">{{$post->title}}</a>
-                                    </td>
-                                    <td>
-                                        Le <b>{{ $post->created_at->format('d/m/Y') }}</b> par <b>{{ $post->user->username }}</b>
-                                    </td>
-                                    <td>
-                                        {{ count($post->comments) }}
-                                    </td>
-                                    <td>
-                                        @if($post->published) Publié @else Non publié @endif
-                                    </td>
-                                </tr>
-                            @empty
-                                Aucun post
-                            @endforelse
 
-                        @if(count($posts) > 0)
-                                </tbody>
-                            </table>
-                        </form>
-                        @endif
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+
+            @if (count($posts) > 0)
+                </form>
+            @endif
+
         </div>
     </div>
 @endsection

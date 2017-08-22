@@ -79,10 +79,10 @@
                                                 </td>
                                                 <td>
                                                     <i class="material-icons left">people</i>
-                                                    120/200
+                                                    {{ $question->done_count }}/{{ $question->scores_count }}
                                                 </td>
-                                                <td>
-                                                    @if($question->published) Publié @else Non publié @endif
+                                                <td class="@if($question->published) green-text @else red-text @endif">
+                                                    <i class="material-icons">label</i>
                                                 </td>
                                             </tr>
                                         @endforeach

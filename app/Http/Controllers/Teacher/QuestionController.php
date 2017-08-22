@@ -28,7 +28,9 @@ class QuestionController extends Controller
      */
     public function index()
     {   
-        $questions = Question::orderBy('created_at', 'desc')->get();
+        $questions = Question::withCount(['scores', 'scores as done' => function ($query) {
+                            $query->where('done', true);
+                        }])->orderBy('created_at', 'desc')->get();
 
         return view('teacher.questions_index', compact('questions'));
     }
