@@ -2,23 +2,28 @@
 
 namespace App;
 
+use App\Presenters\CommonDatePresenter;
 use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-	protected $dates = ['created_at', 'updated_at'];
+	use CommonDatePresenter;
 
+	protected $dates 	= ['created_at', 'updated_at'];
 	protected $fillable = ['title', 'content', 'class_level', 'published'];
 
-	public function choices() {
+	public function choices() 
+	{
 		return $this->hasMany(Choice::class);
 	}
 
-	public function scores() {
+	public function scores() 
+	{
 		return $this->hasMany(Score::class);
 	}
 
-	public function scopePublished($query) {
+	public function scopePublished($query) 
+	{
 		return $query->where('published', true);
 	}
 }

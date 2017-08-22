@@ -9,6 +9,7 @@ use App\Question;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserInject;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MassUpdateRequest;
 use App\Http\Requests\QuestionaryRequest;
 
 class QuestionController extends Controller
@@ -27,7 +28,9 @@ class QuestionController extends Controller
      */
     public function index()
     {   
-        $questions = Question::select('id', 'content', 'published', 'created_at')->orderBy('created_at', 'desc')->get();
+        $questions = Question::withCount(['scores', 'scores as done' => function ($query) {
+                            $query->where('done', true);
+                        }])->orderBy('created_at', 'desc')->get();
 
         return view('teacher.questions_index', compact('questions'));
     }
@@ -71,7 +74,7 @@ class QuestionController extends Controller
         # Insertion des questions dans la base
         $questionnaire->choices()->createMany($choices);
 
-        # Update des données de score
+        # Création des données de score
         $this->publishQuestion($questionnaire);
         
         return redirect()->route('questions.index')->with('message', 'Le questionnaire a bien été créé');
@@ -96,7 +99,7 @@ class QuestionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(QuestionaryRequest $request, Question $question)
-    {   
+    {
         # Traitement du questionnaire
         $question->update($request->all());
 
@@ -108,9 +111,6 @@ class QuestionController extends Controller
                 'answer'  => isset($request->answer[$choice->id]) ? 'yes' : 'no'
             ]);
         }
-
-        # Update des données de score
-        $this->publishQuestion($question);
         
         return redirect()->route('questions.index')->with('message', 'Le questionnaire a été mis à jour');
     }
@@ -128,37 +128,48 @@ class QuestionController extends Controller
         return redirect()->route('questions.index')->with('message', 'Le questionnaire a été supprimé');
     }
 
-    public function multiplePatch (Request $request)
+    /**
+     * Mass questions updating
+     *
+     * @param \App\Http\Requests\MassUpdateRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function multiplePatch (MassUpdateRequest $request)
     {
-        
+        if ($request->operation === 'delete')
+        {
+            Question::destroy($request->items);
+            $message = 'Les questionnaires ont été supprimés';
+        }
+        else 
+        {
+            Question::whereIn('id', $request->items)->update(['published' => ($request->operation === 'publish')]);
+            $message = 'Le statut des questionnaires a été mis à jour';
+        }
+
+        return redirect()->route('questions.index')->with('message', $message);
     }
 
     /** 
-     * Ajoute les données de score pour chaque étudiant si questionnaire publié
+     * Ajoute les données de score pour chaque étudiant
      *
      * @param \App\Question $question
      * @return void
      */
     protected function publishQuestion (Question $question)
     {   
-        # Supprime les données de score existantes
-        Score::where('question_id', $question->id)->delete();
+        $students = User::select('id')->where('level', $question->class_level)->get();
 
-        if ($question->published)
+        if (count($students) > 0) 
         {
-            $students = User::select('id')->where('level', $question->class_level)->get();
-            
-            if (count($students) > 0) 
-            {
-                foreach ($students as $student)
-                {   
-                    # Insère les données de score pour chaque étudiant
-                    Score::create([
-                        'user_id'     => $student->id,
-                        'question_id' => $question->id,
-                        'done'        => false
-                    ]);
-                }
+            foreach ($students as $student)
+            {   
+                # Insère les données de score pour chaque étudiant
+                Score::create([
+                    'user_id'     => $student->id,
+                    'question_id' => $question->id,
+                    'done'        => false
+                ]);
             }
         }
     }

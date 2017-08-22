@@ -90,5 +90,5 @@
 
 @section('scripts')
     @parent
-    <script src="{{ URL::asset('js/questions-form.js') }}"></script>
+    <script src="{{ URL::asset('js/formQuestions.js') }}"></script>
 @endsection

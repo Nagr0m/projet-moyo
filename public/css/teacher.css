@@ -1,0 +1,31 @@
+/* Change all inputs colors */
+.input-field input:not(.browser-default):focus:not([readonly]) + label, 
+.input-field textarea.materialize-textarea:focus:not([readonly]) + label
+{
+    color: #4caf50;
+}
+.input-field input:not(.browser-default):focus:not([readonly]), 
+.input-field textarea.materialize-textarea:focus:not([readonly])
+{
+    border-bottom: 1px solid #4caf50;
+    box-shadow: 0 1px 0 0 #4caf50;
+}
+.switch label input[type=checkbox]:checked+.lever {
+    background-color: #a5d6a7;
+}
+input[type=checkbox]:checked:not(:disabled) ~ .lever:active::before, input[type=checkbox]:checked:not(:disabled).tabbed:focus ~ .lever::before {
+    background-color: rgba(38, 166, 72, 0.15);
+}
+.switch label input[type=checkbox]:checked+.lever:after {
+   background-color: #4caf50; 
+}
+.filled-in[type="checkbox"]:checked + label::after {
+    border: 2px solid #4caf50;
+    background-color: #4caf50;
+}
+.input-field .prefix.active { color: #4caf50; }
+.dropdown-content li > a, .dropdown-content li > span {
+    color: #4caf50;
+}
+#side-nav { background:url('/img/login_bg.jpg'); }
+#side-nav .layer { background-color: rgba(96, 187, 100, 0.8); }

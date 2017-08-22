@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Http\Controllers\UserInject;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MassUpdateRequest;
 
 class PostController extends Controller
 {   
@@ -26,7 +27,7 @@ class PostController extends Controller
      */
     public function index()
     {   
-        $posts = Post::with('user', 'comments')->orderBy('created_at', 'desc')->get();
+        $posts = Post::with('user')->withCount('comments')->orderBy('created_at', 'desc')->paginate(5);
 
         return view('teacher.posts_index', compact('posts'));
     }
@@ -155,10 +156,10 @@ class PostController extends Controller
     /**
      * Mass posts updating
      *
-     * @param Request $request
+     * @param \App\Http\Requests\MassUpdateRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function multiplePatch (Request $request)
+    public function multiplePatch (MassUpdateRequest $request)
     {
         $this->validate($request, [
             'operation' => 'required|string',
@@ -172,8 +173,7 @@ class PostController extends Controller
         }
         else 
         {
-            foreach ($request->items as $itemId)
-                Post::where('id', $itemId)->update(['published' => ($request->operation === 'publish')]);
+            Post::whereIn('id', $request->items)->update(['published' => ($request->operation === 'publish')]);
             $message = 'Le statut des articles a été mis à jour';
         }
 
