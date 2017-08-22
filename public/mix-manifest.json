@@ -1,5 +1,6 @@
 {
     "/utils/js/jquery.min.js": "/utils/js/jquery.min.js",
     "/utils/css/materialize.min.css": "/utils/css/materialize.min.css",
-    "/utils/js/materialize.min.js": "/utils/js/materialize.min.js"
+    "/utils/js/materialize.min.js": "/utils/js/materialize.min.js",
+    "/utils/css/normalize.min.css": "/utils/css/normalize.min.css"
 }

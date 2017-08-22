@@ -15,3 +15,4 @@ mix.copy('node_modules/jquery/dist/jquery.min.js', 'public/utils/js/jquery.min.j
    .copy('node_modules/materialize-css/dist/css/materialize.min.css', 'public/utils/css/materialize.min.css')
    .copy('node_modules/materialize-css/dist/js/materialize.min.js', 'public/utils/js/materialize.min.js')
    .copyDirectory('node_modules/materialize-css/dist/fonts', 'public/utils/fonts')
+   .styles('node_modules/normalize.css/normalize.css', 'public/utils/css/normalize.min.css')
