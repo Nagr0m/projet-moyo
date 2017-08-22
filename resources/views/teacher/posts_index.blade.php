@@ -42,10 +42,6 @@
                         </div>
                         <div class="divider"></div>
                         <div class="panel-content row">
-                            <p class="col s12">
-
-                            </p>
-                            <div class="divider"></div>
                             @if(count($posts) > 0)
                                 <table class="bordered responsive-resources">
                                     <thead>
@@ -61,7 +57,7 @@
                                     <tbody>
                             @endif
                             @forelse($posts as $post)
-                                <tr id="{{$post->id}}">
+                                <tr>
                                     <td>
                                         <input type="checkbox" id="check{{$post->id}}" class="filled-in" name="items[]" value="{{$post->id}}">
                                         <label for="check{{$post->id}}">&nbsp;</label>
