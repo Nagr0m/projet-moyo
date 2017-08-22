@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+let mix = require('laravel-mix')
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +11,7 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.copy('node_modules/jquery/dist/jquery.min.js', 'public/utils/js/jquery.min.js')
+   .copy('node_modules/materialize-css/dist/css/materialize.min.css', 'public/utils/css/materialize.min.css')
+   .copy('node_modules/materialize-css/dist/js/materialize.min.js', 'public/utils/js/materialize.min.js')
+   .copyDirectory('node_modules/materialize-css/dist/fonts', 'public/utils/fonts')

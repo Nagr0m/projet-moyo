@@ -8,7 +8,7 @@
     <title>MoYo - @yield('title')</title>
 
     {{-- MaterializeCSS --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
+    <link rel="stylesheet" href="{{ URL::asset('utils/css/materialize.min.css') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     {{-- Color modifications --}}
@@ -50,8 +50,8 @@
 
     @section('scripts')
         {{-- MaterializeJS & jQuery --}}
-        <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
+        <script src="{{ URL::asset('utils/js/jquery.min.js') }}"></script>
+        <script src="{{ URL::asset('utils/js/materialize.min.js') }}"></script>
         
         <script src="{{ URL::asset('js/teacher-main.js') }}"></script>
 
