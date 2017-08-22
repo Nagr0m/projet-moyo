@@ -46,6 +46,6 @@ Route::namespace('Student')->prefix('student')->middleware(['auth', 'role:studen
     Route::get('dashboard', 'DashboardController@index')->name('student/home');
     Route::get('questions', 'QuestionController@index')->name('student/questions');
     Route::get('question/{id}', 'QuestionController@answer')->name('student/question');
-
+    Route::post('question/submit/{id}', 'QuestionController@submit')->name('student/submit');
 
 });

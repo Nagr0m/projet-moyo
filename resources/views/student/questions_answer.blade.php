@@ -23,7 +23,7 @@
                     </div>
                 </div>
             @endif 
-            <form method="post" action="{{ route('student/questions') }}" id="questionForm">
+            <form method="post" action="{{ route('student/submit', $question->id) }}" id="questionForm">
                 {{ csrf_field() }}
                 <section class="col s12 m4 push-m8">
                     <div class="panel">
@@ -37,7 +37,7 @@
                 <section class="col s12 m8 pull-m4">
                     <div class="panel row">
                         <div class="panel-head deep-orange-text text-darken-3 col s12">
-                            <i class="material-icons left">help_outline</i><p>{{ $question->title }}</p>
+                            <i class="material-icons left">help_outline</i>{{ $question->title }}
                         </div>
                         <div class="divider"></div>
 
@@ -49,15 +49,16 @@
                                 {{-- boucle des choix --}}
                                 @forelse($question->choices as $choice)
                                     <div>
-                                        <p>{{ $loop->index }}. {{ $choice->content }}</p>
-                                        <div class="switch">
-                                            <label>
-                                                Faux
-                                                <input type="checkbox" name="answer_{{ $loop->index }}">
-                                                <span class="lever"></span>
-                                                Vrai
-                                            </label>
-                                        </div>
+                                        <p><i class="material-icons left">navigate_next</i>{{ $choice->content }}</p>
+                                        <p></p>
+                                        <p class="answer_radio">
+                                            <input type="radio" name="{{ $choice->id }}" value="yes" id="answer_{{ $loop->index }}_vrai" class="with-gap" />
+                                            <label for="answer_{{ $loop->index }}_vrai">Vrai</label>
+                                        </p>
+                                        <p class="answer_radio">
+                                            <input type="radio" name="{{ $choice->id }}" value="no" id="answer_{{ $loop->index }}_faux" class="with-gap" />
+                                            <label for="answer_{{ $loop->index }}_faux">Faux</label>
+                                        </p>
                                     </div>
                                 @empty
                                     Aucune question

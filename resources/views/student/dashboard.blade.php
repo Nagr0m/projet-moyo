@@ -31,7 +31,9 @@
                         @endforelse
 
                         @if($scores->count() > 0)
-                            <a class="btn green waves-effect waves-light z-depth-0" href="{{ route('student/questions') }}">Tout les questionnaires</a>
+                            <div class="center-align">
+                                <a class="btn green waves-effect waves-light z-depth-0" href="{{ route('student/questions') }}">Tous les questionnaires</a>
+                            </div>
                         @endif
                         
                     </div>
