@@ -18,6 +18,12 @@ class Post extends Model
 		return $this->hasMany(Comment::class);
 	}
 
+	public function setTitleAttribute($value)
+	{
+		$this->attributes['title']= $value;
+		$this->attributes['slug'] = str_slug($value);
+	}
+
 	public function scopePublished($query) {
 		return $query->where('published', true)->orderby('created_at', 'DESC');
 	}

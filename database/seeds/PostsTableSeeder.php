@@ -14,10 +14,12 @@ class PostsTableSeeder extends Seeder
         for ($i = 0; $i < 10; $i++)
         {   
             $content = $faker->realText(400);
+            $title = $faker->realText(50);
             $date = $faker->dateTimeBetween('-1 years', 'now');
             $post = App\Post::create([
                 'user_id'       => App\User::where('role', 'teacher')->limit(1)->get()[0]->id,
-                'title'         => $faker->realText(50),
+                'title'         => $title,
+                'slug'          => str_slug($title),
                 'abstract'      => Illuminate\Support\Str::words($content, 10),
                 'content'       => $content,
                 'url_thumbnail' => $faker->imageUrl(),
