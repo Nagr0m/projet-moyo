@@ -17,26 +17,27 @@
                         @if($scores->count() > 0)
                             <table class="bordered responsive-resources">
                                 <thead>
+                                    <th width="10"></th>
                                     <th>Titre</th>
-                                    <th>Enoncé</th>
+
                                     <th>Note</th>
-                                    <th>Terminé</th>
                                 </thead>
                                 <tbody>
                         @endif
                         @forelse($scores as $score)
                             <tr id="">
                                 <td>
-                                    <a href="{{ route('posts.edit', $score->id) }}">{{$score->question->title}}</a>
-                                </td>
-                                <td>
-                                    {{ $score->question->content }}
-                                </td>
-                                <td>
-                                    {{ $score->note }}
-                                </td>
-                                <td>
                                     <i class="tiny material-icons left @if($score->done) light-green-text text-accent-4 @else red-text @endif">brightness_1</i>
+                                </td>
+                                <td>
+                                    {{$score->question->title}}
+                                </td>
+                                <td>
+                                    @if($score->done == 0)
+                                        <a class="btn cyan z-depth-0" href="{{ route('student/question', $score->question->id) }}">Répondre</a>
+                                    @else
+                                        {{ $score->note }} / {{ $score->question->choices->count() }}
+                                    @endif
                                 </td>
                             </tr>
                         @empty
