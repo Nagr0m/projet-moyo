@@ -47,12 +47,21 @@
                             </div>
                             <div class="col s12" id="questionsContainer">
                                 {{-- boucle des choix --}}
-                            </div>
-                            <div class="col s12">
-                                <p>
-                                    <a class="btn-flat waves-effect waves-green right" id="delQuestion"><i class="material-icons left">close</i>Supprimer</a>
-                                    <a class="btn-flat waves-effect waves-green right addQuestion"><i class="material-icons left">add</i>Ajouter</a>
-                                </p>
+                                @forelse($question->choices as $choice)
+                                    <div>
+                                        <p>{{ $loop->index }}. {{ $choice->content }}</p>
+                                        <div class="switch">
+                                            <label>
+                                                Faux
+                                                <input type="checkbox" name="answer_{{ $loop->index }}">
+                                                <span class="lever"></span>
+                                                Vrai
+                                            </label>
+                                        </div>
+                                    </div>
+                                @empty
+                                    Aucune question
+                                @endforelse
                             </div>
                         </div>
                     </div>
@@ -64,4 +73,8 @@
 
 @section('scripts')
     @parent
+    <script>
+        $('select').material_select();
+    </script>
+    
 @endsection
