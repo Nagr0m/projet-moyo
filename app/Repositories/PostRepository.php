@@ -4,7 +4,8 @@ namespace App\Repositories;
 
 use App\Post;
 
-class PostRepository {
+class PostRepository 
+{
     protected $post;
 
     public function __construct(Post $post) 
