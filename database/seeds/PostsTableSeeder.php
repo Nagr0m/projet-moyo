@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Repositories\PostImgRepository;
 
 class PostsTableSeeder extends Seeder
 {
@@ -9,24 +10,13 @@ class PostsTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run(Faker\Generator $faker)
+    public function run(Faker\Generator $faker, PostImgRepository $PostImgRepository)
     {   
-        # Suppression des images uploadées
-        $uploads = public_path('img/posts/');
 
         for ($i = 0; $i < 10; $i++)
         {   
-            $imgName = str_random(12) . '.jpg';
             $distImg = file_get_contents($faker->imageUrl(1024, 720));
-            $Img = Image::make($distImg)->resize(env('THUMBNAIL_SIZE', 800), env('THUMBNAIL_SIZE', 800), function ($constraint) {
-                $constraint->aspectRatio(); # Respecte le ratio
-                $constraint->upsize(); # Évite le upsize si image plus petite que 800*800
-            });
-            $Img->save($uploads . $imgName, 100);
-
-            $Img->resize(300, 300, function ($constraint) {
-                $constraint->aspectRatio();
-            })->crop(200, 200)->save($uploads . 'square_' . $imgName, 100);
+            $imgName = $PostImgRepository->saveThumbnail($distImg);
 
             $content = $faker->realText(400);
             $title   = $faker->realText(50);
