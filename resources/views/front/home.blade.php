@@ -4,14 +4,35 @@
 
 
 @section('content')
-	@forelse ($posts as $post)
-		<div>
-			<h2><a>{{ $post->title }}</a></h2>
-			<p><small>{{ $post->user->username }} - {{ $post->created_at }}<br>
-			{{ $post->comments_count }} commentaire{{ plural_string($post->comments_count) }}</small></p>
-		</div>
-		
-	@empty
-		<p>Aucune actualités</p>
-	@endforelse
+		@foreach ($posts as $post)
+			@if ($loop->first)	
+				<div class="grid-3">
+					<div class="two-thirds front-card">
+						<a href="{{ route('actu', $post->id) }}" style="background-image: url({{ $post->urlThumbnail }});">
+							<h2>{{ $post->title }}</h2>
+						</a>
+					</div>
+			@elseif ($loop->iteration === 2)
+					<div class="front-card">
+						<a href="{{ route('actu', $post->id) }}" style="background-image: url({{ $post->urlThumbnail }});">
+							<h2>{{ $post->title }}</h2>
+						</a>
+					</div>
+				</div>
+			@elseif ($loop->iteration === 3)
+				<div class="grid-2">
+					<div class="front-card">
+						<a href="{{ route('actu', $post->id) }}" style="background-image: url({{ $post->urlThumbnail }});">
+							<h2>{{ $post->title }}</h2>
+						</a>
+					</div>
+			@else
+					<div class="front-card">
+						<a href="{{ route('actu', $post->id) }}" style="background-image: url({{ $post->urlThumbnail }});">
+							<h2>{{ $post->title }}</h2>
+						</a>
+					</div>
+				</div>
+			@endif
+		@endforeach
 @endsection
