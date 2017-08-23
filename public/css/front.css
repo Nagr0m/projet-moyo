@@ -1,7 +1,77 @@
+/* Typography */
+body {
+    font-family: 'Raleway', sans-serif;
+    color: #243854;
+}
+h1, h2, h3, h4 {
+    font-family: 'Nunito', serif;
+    font-weight: 800;
+}
+h5 { font-family: 'Nunito', serif; }
+h1 { font-size: 2.3rem; }
+h2 { font-size: 2rem; }
+a {
+    text-decoration: none;
+    color: #00C4CF;
+    transition: color .1s ease;
+}
+a:hover { color: #243854; }
+
+/* Main content */
+.valign {
+    display: flex;
+    align-items: center;
+}
 .container {
     margin: 0 auto;
     max-width: 1280px;
     width: 90%;
+}
+
+/* Header */
+header > .cover {
+    height: 18vh;
+    padding: 3px;
+    justify-content: center;
+}
+header > .cover > .logo {
+    height: 80%;
+    display: inline-block;
+    margin-right: 15px;
+}
+header > .cover > h1.title { display: inline-block; }
+header > nav.bottom {
+    height: 8vh;
+    justify-content: center;
+}
+nav.bottom > a {
+    display: inline-block;
+    font-size: 1.15rem;
+    font-weight: 800;
+    padding: 10px;
+    font-family: 'Nunito', serif;
+    color: #243854;
+}
+nav.bottom > a:hover { color: #00C4CF; }
+nav.bottom > a:hover:after {
+    width: 2.5rem;
+    background-color: #00C4CF;
+}
+nav.bottom a:after {
+    content: '';
+    display: block;
+    margin: auto;
+    margin-top: auto;
+    height: 2px;
+    width: 0px;
+    margin-top: 4px;
+    background: transparent;
+    transition: width .3s ease, background-color .3s ease;
+}
+nav.bottom a.active { color: #00C4CF; }
+nav.bottom a.active:after {
+    width: 2.5rem;
+    background-color: #00C4CF;
 }
 
 @media only screen and (min-width: 601px) {

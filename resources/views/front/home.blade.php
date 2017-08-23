@@ -6,10 +6,9 @@
 @section('content')
 	@forelse ($posts as $post)
 		<div>
-			<h3>{{ $post->title }}</h3>
-			<p>{{ $post->abstract }}</p>
-			<p><small>{{ $post->user->username }} - {{ $post->created_at }}</small></p>
-			<p><small>{{ $post->comments_count }} commentaires</small></p>
+			<h2><a>{{ $post->title }}</a></h2>
+			<p><small>{{ $post->user->username }} - {{ $post->created_at }}<br>
+			{{ $post->comments_count }} commentaire{{ plural_string($post->comments_count) }}</small></p>
 		</div>
 		
 	@empty
