@@ -38,7 +38,7 @@
                                     Image principale 
                                     <i class="material-icons red-text right btn-flat" id="imageClear" @if(!$post->thumbnail) style="display:none" @endif>delete</i>
                                 </h6>
-                                <img class="materialboxed" src="{{ URL::asset('img/posts/' . $post->thumbnail) }}">
+                                <img class="materialboxed" src="{{ $post->urlThumbnail }}">
                                 <div class="file-field input-field @if($errors->has('thumbnail')) invalid @endif" data-error="{{$errors->first('thumbnail')}}">
                                     <div class="btn green">
                                         <span>Importer</span>

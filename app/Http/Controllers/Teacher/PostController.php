@@ -108,9 +108,12 @@ class PostController extends Controller
 
         # Traitement de l'ancienne image
         if ($post->thumbnail && is_null($request->oldThumbnail))
-        {
-            if (File::exists(public_path($post->thumbnail)))
-                File::delete(public_path($post->thumbnail));
+        {   
+            if (File::exists(public_path('img/posts/') . $post->thumbnail))
+                File::delete(public_path('img/posts/') . $post->thumbnail);
+
+            if (File::exists(public_path('img/posts/square_') . $post->thumbnail))
+                File::delete(public_path('img/posts/square_') . $post->thumbnail);
             
             $imgName = null;
         }
@@ -156,9 +159,12 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {   
-        if ($post->url_thumbnail && File::exists(public_path($post->url_thumbnail)))
+        if ($post->thumbnail && File::exists(public_path('img/posts/') . $post->thumbnail))
         {
-            File::delete(public_path($post->url_thumbnail));
+            File::delete(public_path('img/posts/') . $post->thumbnail);
+
+            if (File::exists(public_path('img/posts/square_') . $post->thumbnail))
+                File::delete(public_path('img/posts/square_') . $post->thumbnail);
         }
 
         $post->delete();
