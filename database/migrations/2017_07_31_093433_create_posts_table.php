@@ -20,7 +20,7 @@ class CreatePostsTable extends Migration
             $table->string('slug')->unique();
             $table->string('abstract');
             $table->text('content');
-            $table->string('url_thumbnail')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->boolean('published')->default(false);
             $table->timestamp('published_at')->nullable();
             $table->timestamps();

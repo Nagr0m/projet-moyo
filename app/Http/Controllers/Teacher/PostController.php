@@ -54,7 +54,7 @@ class PostController extends Controller
         # Traitement de l'image
         if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid())
         {   
-            $Image = Image::make($request->thumbnail)->resize(800, 800, function ($constraint) {
+            $Image = Image::make($request->thumbnail)->resize(env('THUMBNAIL_SIZE', 800), env('THUMBNAIL_SIZE', 800), function ($constraint) {
                 $constraint->aspectRatio(); # Respecte le ratio
                 $constraint->upsize(); # Évite le upsize si image plus petite que 800*800
             });
@@ -62,6 +62,12 @@ class PostController extends Controller
             $imgName = str_random(12) . '.' . $request->thumbnail->extension();
             $imgPath = public_path('img/posts/') . $imgName;
             $imgURL  = '/img/posts/' . $imgName;
+
+            # Square thumbnail
+            $squarePath = public_path('img/posts/square_') . $imgName;
+            $Image->resize(300, 300, function ($constraint) {
+                $constraint->aspectRatio();
+            })->crop(200, 200)->save($squarePath, 100);
             
             $Image->save($imgPath, 100);
         }
@@ -69,7 +75,7 @@ class PostController extends Controller
         Post::create([
             'title'         => $request->title,
             'content'       => $request->content,
-            'url_thumbnail' => isset($imgURL) ? $imgURL : null,
+            'thumbnail'     => isset($imgName) ? $imgName : null,
             'abstract'      => isset($request->abstract) ? $request->abstract: '',
             'user_id'       => $request->user()->id,
             'published'     => $request->published
@@ -98,21 +104,21 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {   
-        $imgURL = $post->url_thumbnail;
+        $imgName = $post->thumbnail;
 
         # Traitement de l'ancienne image
-        if ($post->url_thumbnail && is_null($request->oldThumbnail))
+        if ($post->thumbnail && is_null($request->oldThumbnail))
         {
-            if (File::exists(public_path($post->url_thumbnail)))
-                File::delete(public_path($post->url_thumbnail));
+            if (File::exists(public_path($post->thumbnail)))
+                File::delete(public_path($post->thumbnail));
             
-            $imgURL = null;
+            $imgName = null;
         }
 
         # Traitement de l'image
         if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid())
         {
-            $Image = Image::make($request->thumbnail)->resize(800, 800, function ($constraint) {
+            $Image = Image::make($request->thumbnail)->resize(env('THUMBNAIL_SIZE', 800), env('THUMBNAIL_SIZE', 800), function ($constraint) {
                 $constraint->aspectRatio(); # Respecte le ratio
                 $constraint->upsize(); # Évite le upsize si image plus petite que 800*800
             });
@@ -120,6 +126,12 @@ class PostController extends Controller
             $imgName = str_random(12) . '.' . $request->thumbnail->extension();
             $imgPath = public_path('img/posts/') . $imgName;
             $imgURL  = '/img/posts/' . $imgName;
+
+            # Square thumbnail
+            $squarePath = public_path('img/posts/square_') . $imgName;
+            $Image->resize(300, 300, function ($constraint) {
+                $constraint->aspectRatio();
+            })->crop(200, 200)->save($squarePath, 100);
             
             $Image->save($imgPath, 100);
         }
@@ -128,7 +140,7 @@ class PostController extends Controller
         $post->update([
             'title'         => $request->title,
             'content'       => $request->content,
-            'url_thumbnail' => $imgURL,
+            'thumbnail'     => $imgName,
             'abstract'      => $request->abstract,
             'published'     => $request->published
         ]);
