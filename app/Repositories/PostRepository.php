@@ -22,7 +22,7 @@ class PostRepository {
     {
         return $this->post
                     ->with('user')->withCount('comments')
-                    ->orderBy('created_at', 'desc')->paginate($elems);
+                    ->orderBy('created_at', 'desc')->paginate($int);
     }
 
     /**
@@ -37,6 +37,20 @@ class PostRepository {
                     ->with('user')->withCount('comments')
                     ->orderBy('created_at', 'desc')
                     ->published()->take($int)->get();
+    }
+
+    /**
+     * Recupère les $int posts les plus commentés
+     *
+     * @param int $int
+     * @return \Illuminate\Support\Collection
+     */
+    public function getMostCommented (int $int)
+    {
+        return $this->post
+                    ->withCount('comments')
+                    ->orderBy('comments_count', 'desc')
+                    ->take($int)->get();
     }
 
     /**
