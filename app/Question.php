@@ -26,4 +26,8 @@ class Question extends Model
 	{
 		return $query->where('published', true);
 	}
+
+	public function getChoicesCountAttribute() {
+		return $this->choices->count();
+	}
 }

@@ -32,7 +32,7 @@
 
                         @if($scores->count() > 0)
                             <div class="center-align">
-                                <a class="btn green waves-effect waves-light z-depth-0" href="{{ route('student/questions') }}">Tous les questionnaires</a>
+                                <a class="btn cyan waves-effect waves-light z-depth-0" href="{{ route('student/questions') }}">Tous les questionnaires</a>
                             </div>
                         @endif
                         
@@ -41,17 +41,22 @@
             </section>
 
             <section class="col s12 l6">
-                <article class="panel">
+                <article class="panel row">
                     <div class="panel-head blue-grey-text">
                         <i class="material-icons left">poll</i>Statistiques
                     </div>
                     <div class="divider"></div>
-                    <div class="panel-content">
+                    <div class="panel-content col s12 l6">
+                        <span class="panel-item valign-wrapper"><i class="material-icons left deep-orange-text text-darken-3">school</i></span>
+                        <span class="panel-item valign-wrapper"><i class="material-icons left deep-orange-text text-darken-3">school</i></span>
+                        <span class="panel-item valign-wrapper"><i class="material-icons left deep-orange-text text-darken-3">school</i></span>
+                    </div>
+                    <div class="panel-content col s12 l6">
                         <span class="panel-item valign-wrapper">
                             <i class="material-icons left deep-orange-text text-darken-3">school</i>{{ $scores->count() }} questionnaire{{ plural_string($scores) }}
                         </span>
                         <span class="panel-item valign-wrapper">
-                            <i class="material-icons left deep-orange-text text-darken-3">school</i>{{ $scores->where('done', false)->count() }} questionnaire{{ plural_string($scores) }} à faire
+                            <i class="material-icons left deep-orange-text text-darken-3">school</i>{{ $scores->where('done', false)->count() }} questionnaire{{ plural_string($scores->where('done', false)) }} à faire
                         </span>
                         <span class="panel-item valign-wrapper">
                             <i class="material-icons left deep-orange-text text-darken-3">school</i>{{ $scores->where('done', true)->count() }} questionnaire{{ plural_string($scores->where('done', true)) }} terminé{{ plural_string($scores->where('done', true)) }}
