@@ -17,7 +17,7 @@ class PostsTableSeeder extends Seeder
         for ($i = 0; $i < 10; $i++)
         {   
             $imgName = str_random(12) . '.jpg';
-            $distImg = file_get_contents($faker->imageUrl());
+            $distImg = file_get_contents($faker->imageUrl(1024, 720));
             $Img = Image::make($distImg)->resize(env('THUMBNAIL_SIZE', 800), env('THUMBNAIL_SIZE', 800), function ($constraint) {
                 $constraint->aspectRatio(); # Respecte le ratio
                 $constraint->upsize(); # Évite le upsize si image plus petite que 800*800
