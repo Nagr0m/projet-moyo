@@ -22,7 +22,6 @@ class CreatePostsTable extends Migration
             $table->text('content');
             $table->string('url_thumbnail')->nullable();
             $table->boolean('published')->default(false);
-            $table->timestamp('published_at')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL');
         });
