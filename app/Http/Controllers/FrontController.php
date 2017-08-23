@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use App\Post;
 use Illuminate\Http\Request;
+use App\Post;
+use App\Repositories\PostRepository;
 use App\Http\Controllers\UserInject;
 
 class FrontController extends Controller
@@ -16,22 +17,21 @@ class FrontController extends Controller
 		$this->setUser();
 	}
 
-	public function home()
+	public function home (PostRepository $PostRepository)
 	{	
-		$posts = Post::with('user')->withCount('comments')->published()->take(3)->get();
+		$posts = $PostRepository->getLastsPublished(3);
 		return view('front.home', compact('posts'));
 	}
 
-	public function postsIndex()
-	{
-		// dd(Post::with('user')->published()->paginate(10));
-		$posts = Post::with('user')->withCount('comments')->published()->paginate(5);
+	public function postsIndex (PostRepository $PostRepository)
+	{	
+		$posts = $PostRepository->getAllPublishedPaginate(5);
 		return view('front.actus', compact('posts'));
 	}
 
-	public function postSingle($id)
-	{
-		$post = Post::with('user', 'comments')->findOrFail($id);
+	public function postSingle (PostRepository $PostRepository, int $id)
+	{	
+		$post = $PostRepository->getOneAllInfos($id);
 		return view('front.actu', compact('post'));
 	}
 

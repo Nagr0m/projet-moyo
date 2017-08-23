@@ -7,6 +7,7 @@ use Image;
 use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
+use App\Repositories\PostRepository;
 use App\Http\Controllers\UserInject;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassUpdateRequest;
@@ -25,9 +26,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(PostRepository $postRepository)
     {   
-        $posts = Post::with('user')->withCount('comments')->orderBy('created_at', 'desc')->paginate(5);
+        $posts = $postRepository->getAllPaginate(5);
 
         return view('teacher.posts_index', compact('posts'));
     }
@@ -65,7 +66,7 @@ class PostController extends Controller
             $Image->save($imgPath, 100);
         }
         # Enregistrement de l'article
-        $post = Post::create([
+        Post::create([
             'title'         => $request->title,
             'content'       => $request->content,
             'url_thumbnail' => isset($imgURL) ? $imgURL : null,
@@ -161,11 +162,6 @@ class PostController extends Controller
      */
     public function multiplePatch (MassUpdateRequest $request)
     {
-        $this->validate($request, [
-            'operation' => 'required|string',
-            'items'     => 'required|array'
-        ]);
-
         if ($request->operation === 'delete')
         {
             Post::destroy($request->items);
