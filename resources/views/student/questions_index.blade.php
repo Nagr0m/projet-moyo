@@ -36,7 +36,7 @@
                                     @if($score->done == 0)
                                         <a class="btn cyan z-depth-0" href="{{ route('student/question', $score->question->id) }}">Répondre</a>
                                     @else
-                                        {{ $score->note }} / {{ $score->question->choices->count() }}
+                                        {{ $score->note }} / {{ $score->question->choicesCount }}
                                     @endif
                                 </td>
                             </tr>

@@ -21,7 +21,7 @@ class DashboardController extends Controller
             $query->where('published', true);
         })->get();
 
-    	// dd($request->user());
+    	// dd($scores[0]->question->choicesCount);
 
     	return view('student.dashboard', compact('scores'));
     }

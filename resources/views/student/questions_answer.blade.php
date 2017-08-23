@@ -5,24 +5,6 @@
 @section('content')
     <div class="section">
         <div class="row">
-            {{-- Front-end validation --}}
-            <div class="col s12 frontErrors" style="display:none">
-                <div class="panel col s12">
-                    <div class="panel-content">
-                        Certains champs comportent des erreurs.
-                    </div>
-                </div>
-            </div>
-            {{-- Back-end validation --}}
-            @if(count($errors) > 0)
-                <div class="col s12 backErrors">
-                    <div class="panel col s12">
-                        <div class="panel-content">
-                            Le formulaire comporte des erreurs.
-                        </div>
-                    </div>
-                </div>
-            @endif 
             <form method="post" action="{{ route('student/submit', $question->id) }}" id="questionForm">
                 {{ csrf_field() }}
                 <section class="col s12 m4 push-m8">
@@ -74,8 +56,5 @@
 
 @section('scripts')
     @parent
-    <script>
-        $('select').material_select();
-    </script>
     
 @endsection
