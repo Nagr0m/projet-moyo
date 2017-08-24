@@ -18,11 +18,9 @@
 <body>
 	@include('partials.front_header')
 
-
 	<div class="grid">
-
-		<main class="content three-quarters">
-			<div class="container">
+		<main class="three-quarters">
+			<div class="content-wrapper">
 				@yield('content')
 			</div>
 		</main>

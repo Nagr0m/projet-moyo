@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use View;
 use Illuminate\Http\Request;
-use App\Post;
 use App\Repositories\PostRepository;
 use App\Http\Controllers\UserInject;
 
@@ -12,14 +12,15 @@ class FrontController extends Controller
 {
 	use UserInject;
 
-	public function __construct ()
+	public function __construct (PostRepository $PostRepository)
 	{
 		$this->setUser();
+		View::share('mostCommentedPosts', $PostRepository->getMostCommented(3));
 	}
 
 	public function home (PostRepository $PostRepository)
 	{	
-		$posts = $PostRepository->getLastsPublished(3);
+		$posts = $PostRepository->getLastsPublishedWithPic(4);
 		return view('front.home', compact('posts'));
 	}
 

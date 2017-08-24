@@ -4,7 +4,8 @@ namespace App\Repositories;
 
 use App\Post;
 
-class PostRepository {
+class PostRepository 
+{
     protected $post;
 
     public function __construct(Post $post) 
@@ -31,10 +32,11 @@ class PostRepository {
      * @param int $int
      * @return \Illuminate\Support\Collection
      */
-    public function getLastsPublished (int $int)
+    public function getLastsPublishedWithPic (int $int)
     {
         return $this->post
                     ->with('user')->withCount('comments')
+                    ->whereNotNull('thumbnail')
                     ->orderBy('created_at', 'desc')
                     ->published()->take($int)->get();
     }

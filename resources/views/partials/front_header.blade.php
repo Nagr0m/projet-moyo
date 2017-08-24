@@ -7,15 +7,15 @@
 	</div>  --}}
 
 	<div class="cover valign">
-		<img class="logo" src="{{ URL::asset('img/school_logo.png') }}">
-		<h1 class="title">Lycée Moyo</h1>
+		<a href="{{ route('home') }}" class="valign inverse">
+			<img class="logo" src="{{ URL::asset('img/school_logo.png') }}">
+			<h1 class="title">Lycée Moyo</h1>
+		</a>
 	</div>
-	@if (Auth::check())
-	{{ $user->username }}
-	@endif
 	<nav class="bottom valign">
-		<a {{ classActivePath('/') }} href="{{ route('home') }}">Home</a>
-		<a href="{{ route('actus') }}">Actualités</a>
-		<a href="{{ route('lycee') }}">Le lycée</a>
+		<a {{ classActivePath('') }} href="{{ route('home') }}">Home</a>
+		<a {{ classActivePath('actu') }} href="{{ route('actus') }}">Actualités</a>
+		<a {{ classActivePath('lycee') }} href="{{ route('lycee') }}">Le lycée</a>
+		
 	</nav>
 </header>

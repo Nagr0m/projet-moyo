@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Teacher;
 
-use File;
-use Image;
 use App\Post;
-use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Repositories\PostRepository;
 use App\Http\Controllers\UserInject;
 use App\Http\Controllers\Controller;
+use App\Repositories\PostImgRepository;
 use App\Http\Requests\MassUpdateRequest;
 
 class PostController extends Controller
@@ -24,6 +22,7 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \App\Repositories\PostRepository $PostRepository
      * @return \Illuminate\Http\Response
      */
     public function index(PostRepository $postRepository)
@@ -47,29 +46,15 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\PostRequest  $request
+     * @param  \App\Repositories\PostImgRepository $PostImgRepository
      * @return \Illuminate\Http\Response
      */
-    public function store(PostRequest $request)
+    public function store(PostRequest $request, PostImgRepository $PostImgRepository)
     {   
         # Traitement de l'image
         if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid())
         {   
-            $Image = Image::make($request->thumbnail)->resize(env('THUMBNAIL_SIZE', 800), env('THUMBNAIL_SIZE', 800), function ($constraint) {
-                $constraint->aspectRatio(); # Respecte le ratio
-                $constraint->upsize(); # Évite le upsize si image plus petite que 800*800
-            });
-            
-            $imgName = str_random(12) . '.' . $request->thumbnail->extension();
-            $imgPath = public_path('img/posts/') . $imgName;
-            $imgURL  = '/img/posts/' . $imgName;
-
-            # Square thumbnail
-            $squarePath = public_path('img/posts/square_') . $imgName;
-            $Image->resize(300, 300, function ($constraint) {
-                $constraint->aspectRatio();
-            })->crop(200, 200)->save($squarePath, 100);
-            
-            $Image->save($imgPath, 100);
+            $imgName = $PostImgRepository->saveThumbnail($request->thumbnail); 
         }
         # Enregistrement de l'article
         Post::create([
@@ -100,40 +85,24 @@ class PostController extends Controller
      *
      * @param  \App\Http\Requests\PostRequest  $request
      * @param  \App\Post  $post
+     * @param  \App\Repositories\PostImgRepository $PostImgRepository
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request, Post $post)
+    public function update(PostRequest $request, Post $post, PostImgRepository $PostImgRepository)
     {   
         $imgName = $post->thumbnail;
 
         # Traitement de l'ancienne image
         if ($post->thumbnail && is_null($request->oldThumbnail))
-        {
-            if (File::exists(public_path($post->thumbnail)))
-                File::delete(public_path($post->thumbnail));
-            
+        {   
+            $PostImgRepository->destroyThumbnail($imgName);
             $imgName = null;
         }
 
         # Traitement de l'image
         if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid())
         {
-            $Image = Image::make($request->thumbnail)->resize(env('THUMBNAIL_SIZE', 800), env('THUMBNAIL_SIZE', 800), function ($constraint) {
-                $constraint->aspectRatio(); # Respecte le ratio
-                $constraint->upsize(); # Évite le upsize si image plus petite que 800*800
-            });
-            
-            $imgName = str_random(12) . '.' . $request->thumbnail->extension();
-            $imgPath = public_path('img/posts/') . $imgName;
-            $imgURL  = '/img/posts/' . $imgName;
-
-            # Square thumbnail
-            $squarePath = public_path('img/posts/square_') . $imgName;
-            $Image->resize(300, 300, function ($constraint) {
-                $constraint->aspectRatio();
-            })->crop(200, 200)->save($squarePath, 100);
-            
-            $Image->save($imgPath, 100);
+            $imgName = $PostImgRepository->saveThumbnail($request->thumbnail);
         }
 
         # Mise à jour de l'article
@@ -151,14 +120,15 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Post $post
+     * @param  \App\Post $post
+     * @param \App\Repositories\PostImgRepository $PostImgRepository
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post, PostImgRepository $PostImgRepository)
     {   
-        if ($post->url_thumbnail && File::exists(public_path($post->url_thumbnail)))
+        if ($post->thumbnail)
         {
-            File::delete(public_path($post->url_thumbnail));
+            $PostImgRepository->destroyThumbnail($post->thumbnail);
         }
 
         $post->delete();
@@ -176,7 +146,7 @@ class PostController extends Controller
     {
         if ($request->operation === 'delete')
         {
-            Post::destroy($request->items);
+            $this->massPostDelete($request->items, new PostImgRepository());
             $message = 'Les articles ont été supprimés';
         }
         else 
@@ -186,5 +156,24 @@ class PostController extends Controller
         }
 
         return redirect()->route('posts.index')->with('message', $message);
+    }
+
+    /**
+     * Suppression de masse de posts et d'images associées
+     *
+     * @param array $items
+     * @param \App\Repositories\PostImgRepository $PostImgRepository
+     * @return void
+     */
+    public function massPostDelete (array $items, PostImgRepository $PostImgRepository)
+    {
+        foreach ($items as $id)
+        {
+            $post = Post::find($id);
+            if ($post->thumbnail)
+                $PostImgRepository->destroyThumbnail($post->thumbnail);
+            
+            $post->delete();
+        }
     }
 }
