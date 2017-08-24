@@ -155,7 +155,7 @@ class QuestionController extends Controller
      * @param \App\Question $question
      * @return void
      */
-    protected function publishQuestion (Question $question)
+    public function publishQuestion (Question $question)
     {   
         $students = User::select('id')->where('level', $question->class_level)->get();
 
