@@ -12,6 +12,8 @@ class PostsTableSeeder extends Seeder
      */
     public function run(Faker\Generator $faker, PostImgRepository $PostImgRepository)
     {   
+        $files = File::allFiles(public_path('img/posts'));
+        foreach($files as $file) File::delete($file);
 
         for ($i = 0; $i < 10; $i++)
         {   
