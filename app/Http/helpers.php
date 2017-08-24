@@ -15,8 +15,10 @@ if (!function_exists('classActivePath')) {
 
 		function classActivePath($path)
 		{	
+			if ($path === '/')
+				return Request::path() === $path ? ' class=active' : '';
+
 			$reg = '#'.$path.'#';
-            
 			return preg_match($reg, Request::path()) ? ' class=active' : '';
 		}
 }
