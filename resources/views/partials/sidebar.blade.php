@@ -8,7 +8,8 @@
                     @endif
                     <h4>
                         {{ $featuredPost->title }}<br>
-                        <small>{{ $featuredPost->created_at }} - {{ $featuredPost->comments_count }}</small>
+                        <small>{{ $featuredPost->created_at }} - <span class="typcn typcn-messages"></span>
+ {{ $featuredPost->comments_count }}</small>
                     </h4>
                 </a>
             @endforeach

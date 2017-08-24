@@ -36,12 +36,15 @@
 
 /* Header */
     header > .cover {
-        height: 18vh;
-        padding: 3px;
-        justify-content: center;
+
+        padding: 10px 0;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        width: 95%;
+        margin: 0 auto;
     }
     header > .cover > a {
-        height: 100%;
+        height: 5rem;
     }
     header > .cover .logo {
         height: 80%;
@@ -49,9 +52,9 @@
         margin-right: 15px;
     }
     header > .cover h1.title { display: inline-block; }
-    header > nav.bottom {
-        height: 8vh;
+    nav.bottom {
         justify-content: center;
+        flex-wrap: wrap;
     }
     nav.bottom > a {
         display: inline-block;
@@ -110,9 +113,6 @@
     }
     .front-card {
         padding: .5rem;
-        height: 170px;
-    }
-    .grid-3 .front-card {
         height: 50vh;
     }
     .front-card > a {
@@ -125,6 +125,7 @@
         position: relative;
         background-size: cover;
         padding: 1rem;
+        text-align: right;
     }
     .front-card > a:before, .front-card > a:after {
         content: " ";
@@ -149,12 +150,21 @@
     .front-card > a:hover:after { opacity: 1; }
     .front-card > a > h2 {
         z-index: 2;
+        margin-bottom: 0;
+        font-size: 1.7rem;
+    }
+    .front-card > a > h2 > small {
+        font-size: 1rem;
     }
 
 @media only screen and (min-width: 601px) {
     .container { width: 85%; }
+    .front-card > a > h2 { font-size: 1.5rem; }
 }
 
 @media only screen and (min-width: 993px) {
     .container { width: 80%; }
+    .front-card > a > h2 { font-size: 2rem; }
+    .grid-2 > .front-card { height: 170px; }
+    header > .cover { height: 18vh; }
 }

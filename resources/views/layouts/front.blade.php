@@ -7,9 +7,10 @@
 
 	<title>MoYo - @yield('title')</title>
 
-	{{-- Normalize and Grid layout --}}
+	{{-- Vendor CSS --}}
 	<link rel="stylesheet" href="{{ URL::asset('utils/css/normalize.min.css') }}">
 	<link rel="stylesheet" href="{{ URL::asset('css/grillade.css') }}">
+	<link rel="stylesheet" href="{{ URL::asset('utils/css/typicons.min.css') }}">
 	{{-- Google Fonts --}}
 	<link href="https://fonts.googleapis.com/css?family=Nunito:400,700,800|Raleway:400,400i,700,700i" rel="stylesheet">
 	{{-- Main CSS --}}
