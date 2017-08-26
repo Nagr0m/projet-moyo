@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="{{ URL::asset('css/grillade.css') }}">
 	<link rel="stylesheet" href="{{ URL::asset('utils/css/typicons.min.css') }}">
 	{{-- Google Fonts --}}
-	<link href="https://fonts.googleapis.com/css?family=Nunito:400,700,800|Raleway:400,400i,700,700i" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 	{{-- Main CSS --}}
 	<link rel="stylesheet" href="{{ URL::asset('css/front.css') }}">
 </head>

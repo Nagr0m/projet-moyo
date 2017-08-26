@@ -8,7 +8,7 @@
 			@if ($loop->first)	
 				<div class="grid-3">
 					<div class="two-thirds front-card">
-						<a href="{{ route('actu', $post->id) }}" style="background-image: url({{ $post->urlThumbnail }});">
+						<a class="gradient-mask" href="{{ route('actu', $post->id) }}" style="background-image: url({{ $post->urlThumbnail }});">
 							<h2>
 								{{ $post->title }}<br>
 								<small>{{ $post->user->username }} - {{ $post->created_at }}</small>
@@ -17,7 +17,7 @@
 					</div>
 			@elseif ($loop->iteration === 2)
 					<div class="front-card">
-						<a href="{{ route('actu', $post->id) }}" style="background-image: url({{ $post->urlThumbnail }});">
+						<a class="gradient-mask" href="{{ route('actu', $post->id) }}" style="background-image: url({{ $post->urlThumbnail }});">
 							<h2>
 								{{ $post->title }}<br>
 								<small>{{ $post->user->username }} - {{ $post->created_at }}</small>
@@ -28,7 +28,7 @@
 			@elseif ($loop->iteration === 3)
 				<div class="grid-2">
 					<div class="front-card">
-						<a href="{{ route('actu', $post->id) }}" style="background-image: url({{ $post->urlThumbnail }});">
+						<a class="gradient-mask" href="{{ route('actu', $post->id) }}" style="background-image: url({{ $post->urlThumbnail }});">
 							<h2>
 								{{ $post->title }}<br>
 								<small>{{ $post->user->username }} - {{ $post->created_at }}</small>
@@ -37,7 +37,7 @@
 					</div>
 			@else
 					<div class="front-card">
-						<a href="{{ route('actu', $post->id) }}" style="background-image: url({{ $post->urlThumbnail }});">
+						<a class="gradient-mask" href="{{ route('actu', $post->id) }}" style="background-image: url({{ $post->urlThumbnail }});">
 							<h2>
 								{{ $post->title }}<br>
 								<small>{{ $post->user->username }} - {{ $post->created_at }}</small>

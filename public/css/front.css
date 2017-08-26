@@ -3,10 +3,12 @@
 }
 /* Typography */
     body {
-        font-family: 'Raleway', sans-serif;
+        font-family: 'Nunito', sans-serif;
+        font-size: 1.1rem;
         color: #243854;
+        font-weight: 600;
     }
-    h1, h2, h3, h4 {
+    h1, h2, h3, h4, b {
         font-family: 'Nunito', serif;
         font-weight: 800;
     }
@@ -33,10 +35,15 @@
         width: 90%;
     }
     img.full-width { max-width: 100%; }
+    .hide-xs { display: none; }
+    .divider {
+        width: 90%;
+        border-bottom: 1px solid #EAEAEA;
+        margin: 0 auto;
+    }
 
 /* Header */
     header > .cover {
-
         padding: 10px 0;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -117,13 +124,13 @@
     }
     .front-card > a {
         display: flex;
-        align-items: end;
+        align-items: flex-end;
         justify-content: flex-end;
         border-radius: 5px;
         height: 100%;
         color: #FFFFFF;
-        position: relative;
         background-size: cover;
+        position: relative;
         padding: 1rem;
         text-align: right;
     }
@@ -157,9 +164,39 @@
         font-size: 1rem;
     }
 
+/* Posts index */
+    #postsIndex .item {
+        margin: 2rem 0;
+        align-items: center;
+        flex-direction: column;
+    }
+    #postsIndex > .item .item-caption{
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    #postsIndex > .item > .item-content h2 {
+        margin: 10px 0;
+        display: inline-block;
+    }
+    #postsIndex > .item > .item-content p { margin: 5px 0; }
+    #postsIndex > .item > .item-content small { font-size: 1rem;}
+
+/* Post Single */
+    .featured-img {
+        width: 100%;
+        height: 50vh;
+        display: flex;
+        align-items: end;
+        justify-content: end;
+        border-radius: 5px;
+        background-size: cover;
+    }
+
 @media only screen and (min-width: 601px) {
     .container { width: 85%; }
     .front-card > a > h2 { font-size: 1.5rem; }
+    #postsIndex > .item .item-caption { border-radius: 5px; }
+    .hide-xs { display: block; }
 }
 
 @media only screen and (min-width: 993px) {
@@ -167,4 +204,8 @@
     .front-card > a > h2 { font-size: 2rem; }
     .grid-2 > .front-card { height: 170px; }
     header > .cover { height: 18vh; }
+    #postsIndex .item {
+        align-items: start;
+        flex-direction: row; }
+    
 }

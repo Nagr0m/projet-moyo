@@ -33,7 +33,7 @@ class PostImgRepository
 
         # Traitement de la miniature carrée
         $squarePath = $this->uploadPath . 'square_' . $imgName;
-        $ImageMaster->resize(300, 300, function ($constraint) {
+        $ImageMaster->resize(400, 400, function ($constraint) {
             $constraint->aspectRatio();
         })->crop(200, 200)->save($squarePath, 100);
 
