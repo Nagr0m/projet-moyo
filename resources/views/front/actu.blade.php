@@ -40,7 +40,7 @@
 				</label>
 				<textarea rows="7" cols="40" name="content" id="content">{{ old('content') }}</textarea>
 				<br>
-				<div class="g-recaptcha" data-sitekey="6LdFVC4UAAAAAJBkFV8uvNXcDnr-DKczs1My1cVo"></div>
+				<div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_PUBLIC') }}"></div>
 				<button class="submit">Envoyer</button>
 			</form>
 			<div class="divider"></div>

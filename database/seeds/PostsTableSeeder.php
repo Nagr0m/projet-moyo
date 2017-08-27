@@ -34,8 +34,9 @@ class PostsTableSeeder extends Seeder
             # Ajout de commentaires
             $nbComments = rand(0, 10);
             for ($j = 0; $j < $nbComments; $j++)
-            {
-                $commentdate = $faker->dateTimeBetween($post->created_at, 'now');
+            {   
+                $start = \Carbon\Carbon::createFromFormat('d/m/Y', $post->created_at);
+                $commentdate = $faker->dateTimeBetween($start, 'now');
                 $post->comments()->create([
                     'name'      => $faker->userName,
                     'content'   => $faker->text(),
