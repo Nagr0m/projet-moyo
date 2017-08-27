@@ -19,5 +19,5 @@
 
 <div class="widget">
     <h3>Le lycée sur Twitter</h3>
-    <a class="twitter-timeline" href="https://twitter.com/ecolemultimedia" data-height="200" data-chrome="nofooter noborders noheader" data-link-color="#00C4CF">Tweets by ecolemultimedia</a>
+    <a class="twitter-timeline" href="https://twitter.com/ecolemultimedia" data-height="300" data-chrome="nofooter noborders noheader" data-link-color="#00C4CF">Tweets by ecolemultimedia</a>
 </div>

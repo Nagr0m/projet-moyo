@@ -17,12 +17,12 @@ class PostImgRepository
     /**
      * Enregistre une image d'article et sa miniature
      *
-     * @param \Illuminate\Http\UploadedFile ou file_get_contents() string $imgFile
+     * @param \Illuminate\Http\UploadedFile $imgFile
      * @return string $imgName
      */
-    public function saveThumbnail ($imgFile)
+    public function saveThumbnail (\Illuminate\Http\UploadedFile $imgFile)
     {
-        $imgName = $this->genImgName($imgFile);
+        $imgName = str_random(12) . '.' . $imgFile->extension();
         # Traitement de l'image
         $ImageMaster = Image::make($imgFile)
                             ->resize(env('THUMBNAIL_SIZE', 800), env('THUMBNAIL_SIZE', 800), function ($constraint) {
@@ -55,19 +55,5 @@ class PostImgRepository
         # Suppression de la miniature
         if (File::exists($this->uploadPath . 'square_' . $imgName))
             File::delete($this->uploadPath . 'square_' . $imgName);
-    }
-
-    /**
-     * Génère le nom de l'image selon le type de fichier
-     *
-     * @param mixed $file
-     * @return string
-     */
-    public function genImgName ($file)
-    {
-        if (is_string($file))
-            return str_random(12) . '.jpg';
-
-        return str_random(12) . '.' . $file->extension();
     }
 }

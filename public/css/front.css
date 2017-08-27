@@ -4,17 +4,17 @@
 /* Typography */
     body {
         font-family: 'Nunito', sans-serif;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         color: #243854;
         font-weight: 600;
+        line-height: 1.7rem;
     }
     h1, h2, h3, h4, b {
-        font-family: 'Nunito', serif;
         font-weight: 800;
     }
-    h5 { font-family: 'Nunito', serif; }
     h1 { font-size: 2.3rem; }
     h2 { font-size: 2rem; }
+    h3 { font-size: 1.6rem; }
     a {
         text-decoration: none;
         color: #00C4CF;
@@ -65,7 +65,7 @@
     }
     nav.bottom > a {
         display: inline-block;
-        font-size: 1.15rem;
+        font-size: 1.3rem;
         font-weight: 800;
         padding: 10px;
         font-family: 'Nunito', serif;
@@ -96,12 +96,12 @@
         border-left: 1px solid #EAEAEA;
     }
     .widget > h3 {
-        font-size: 1.3em;
+        font-size: 1.2em;
         margin-bottom: 0;
         padding-bottom: .7rem;
         border-bottom: 1px solid #EAEAEA;
     }
-    .widget > .item > img {
+    .widget > .item > img, .comments-wrapper .valign > img {
         border-radius: 50%;
         width: 55px;
         margin-right: 10px;
@@ -134,7 +134,7 @@
         padding: 1rem;
         text-align: right;
     }
-    .front-card > a:before, .front-card > a:after {
+    .front-card > a:before, .front-card > a:after, .featured-img a:before, .featured-img a:after {
         content: " ";
         width: 100%;
         height: 100%;
@@ -145,16 +145,16 @@
         left: 0;
         transition: opacity .3s ease;
     }
-    .front-card > a:before { 
+    .front-card > a:before, .featured-img a:before { 
         background: linear-gradient(to top, rgba(7, 37, 56, .6), rgba(7, 37, 56, .1));
         opacity: 1;
     }
-    .front-card > a:after { 
+    .front-card > a:after, .featured-img a:after { 
         background: rgba(7, 37, 56, .6); 
         opacity: 0;
     }
-    .front-card > a:hover:before { opacity: 0; }
-    .front-card > a:hover:after { opacity: 1; }
+    .front-card > a:hover:before, .featured-img a:hover:before { opacity: 0; }
+    .front-card > a:hover:after, .featured-img a:hover:after { opacity: 1; }
     .front-card > a > h2 {
         z-index: 2;
         margin-bottom: 0;
@@ -185,16 +185,84 @@
     .featured-img {
         width: 100%;
         height: 50vh;
-        display: flex;
-        align-items: end;
-        justify-content: end;
         border-radius: 5px;
         background-size: cover;
+    }
+    .featured-img a {
+        position: relative;
+        padding: 1rem;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: flex-end;
+        justify-content: start;
+        color: #FFFFFF; 
+        cursor: zoom-in;
+    }
+    .featured-img h2 {
+        margin-bottom: 0;
+        font-size: 1.7rem;
+        z-index: 4;
+    }
+    p.lead {
+        font-weight: 800;
+        font-size: 1.6rem;
+        line-height: 2.1rem;
+    }
+    p.meta {
+        margin: 1.5em 0 1em;
+        padding-left: 1.5em;
+        border-left: 4px solid #00C4CF;
+        font-weight: 400;
+    }
+
+/* Comment Form */
+    .newCommentForm {
+        margin: 1rem 0 3rem;
+    }
+    .newCommentForm label {
+        display: block; 
+        margin: 10px 0 .8rem;
+    }
+    input, textarea {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    .submit {
+        margin: 10px 10px 0 0;
+        padding: 1rem 1.3rem;
+        background: #00C4CF;
+        border: none;
+        color: #FFFFFF;
+        border-radius: 50px;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+/* Lycée page */
+    .page-head {
+        height: 20vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .page-head h2 { font-size: 2.5rem; }
+    .page-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .page-content img {
+        width: 80%;
+        margin: 1rem 0;
+        border-radius: 5px;
     }
 
 @media only screen and (min-width: 601px) {
     .container { width: 85%; }
-    .front-card > a > h2 { font-size: 1.5rem; }
+    .front-card > a > h2, .featured-img h2 { font-size: 1.5rem; }
     #postsIndex > .item .item-caption { border-radius: 5px; }
     .hide-xs { display: block; }
 }
@@ -202,10 +270,14 @@
 @media only screen and (min-width: 993px) {
     .container { width: 80%; }
     .front-card > a > h2 { font-size: 2rem; }
+    .featured-img h2 { font-size: 2.3rem; }
+    .featured-img a { padding: 2rem; }
     .grid-2 > .front-card { height: 170px; }
     header > .cover { height: 18vh; }
     #postsIndex .item {
         align-items: start;
         flex-direction: row; }
+    input { width: 35%; }
+    textarea { width: 60%; }
     
 }

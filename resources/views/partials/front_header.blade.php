@@ -12,7 +12,7 @@
 			<h1 class="title">Lycée Moyo</h1>
 		</a>
 		<nav class="bottom valign">
-			<a {{ classActivePath('/') }} href="{{ route('home') }}">Home</a>
+			<a {{ classActivePath('/') }} href="{{ route('home') }}">Accueil</a>
 			<a {{ classActivePath('actu') }} href="{{ route('actus') }}">Actualités</a>
 			<a {{ classActivePath('lycee') }} href="{{ route('lycee') }}">Le lycée</a>
 			<a href="{{ route('login') }}">
