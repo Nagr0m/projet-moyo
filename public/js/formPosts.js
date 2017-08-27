@@ -9,12 +9,16 @@ $( () => {
     let imageName      = imageContainer.find('input.file-path')
     let imageField     = imageContainer.find('input[type=file]')
     // Variables pour validation
-    let hasErrors    = false
-    let form         = $('#postForm')
-    let errorPanel   = $('.frontErrors')
-    let titleField   = $('input[name=title]')
-    let contentField = $('textarea[name=content]')
+    let hasErrors     = false
+    let form          = $('#postForm')
+    let errorPanel    = $('.frontErrors')
+    let titleField    = $('input[name=title]')
+    let contentField  = $('textarea[name=content]')
+    let abstractField = $('textarea[name=abstract]')
 
+    // Initialisation des textareas
+    contentField.trigger('autoresize')
+    abstractField.trigger('autoresize')
 
     // Events
     imageField.on('change', liveImgPreview)
@@ -56,6 +60,8 @@ $( () => {
             displayError(titleField, 'Ce champ ne peut pas être vide')
         if (contentField.val() === '')
             displayError(contentField, 'Ce champ ne peut pas être vide')
+        if (abstractField.val() === '')
+            displayError(abstractField, 'Ce champ ne peut pas être vide')
 
         if (hasErrors) return false
         

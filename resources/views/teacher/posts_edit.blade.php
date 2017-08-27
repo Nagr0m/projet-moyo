@@ -40,7 +40,7 @@
                                 </h6>
                                 <img class="materialboxed" src="{{ $post->urlThumbnail }}">
                                 <div class="file-field input-field @if($errors->has('thumbnail')) invalid @endif" data-error="{{$errors->first('thumbnail')}}">
-                                    <div class="btn green">
+                                    <div class="btn green z-depth-0">
                                         <span>Importer</span>
                                         <input type="file" name="thumbnail">
                                     </div>
@@ -79,10 +79,10 @@
                                     <label for="content">Article (obligatoire)</label>
                                 </div>
                                 <div class="input-field col s12 @if($errors->has('abstract')) invalid @endif" data-error="{{$errors->first('abstract')}}">
-                                    <input type="text" name="abstract" id="abstract" @if($errors->has('abstract')) class="invalid" @endif value="{{ oldValue('abstract', $post->abstract) }}">
-                                    <label for="abstract">Extrait</label>
+                                    <textarea class="materialize-textarea @if($errors->has('content')) invalid @endif" name="abstract" id="abstract">{{ oldValue('abstract', $post->abstract) }}</textarea>
+                                    <label for="abstract">Extrait (obligatoire)</label>
                                 </div>
-                                <p class="col s12">L'extrait est affiché sur l'accueil du site et la liste des articles. Laisser vide pour un extrait automatique.</p>
+                                <p class="col s12">L'extrait est affiché sur la liste des articles et au début de celui-ci.</p>
                             </div>
                         </div>
                     </div>

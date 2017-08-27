@@ -26,7 +26,7 @@ class PostRequest extends FormRequest
         return [
             'title'     => 'required|string',
             'content'   => 'required|string',
-            'abstract'  => 'string|nullable',
+            'abstract'  => 'required|string',
             'published' => 'required',
             'thumbnail' => 'image|max:'.env('MAX_UPLOAD', 2000).'|nullable'
         ];
