@@ -68,6 +68,6 @@ class PostImgRepository
         if (is_string($file))
             return str_random(12) . '.jpg';
 
-        return str_random(12) . '.' . $imgFile->extension();
+        return str_random(12) . '.' . $file->extension();
     }
 }
