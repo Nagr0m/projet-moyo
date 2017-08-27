@@ -25,6 +25,10 @@
     a.inverse:hover, nav.bottom > a:hover { color: #00C4CF; }
 
 /* Main helpers*/
+    footer {
+        margin: 2rem 0;
+        text-align: center;
+    }
     .valign {
         display: flex;
         align-items: center;
