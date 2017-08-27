@@ -39,9 +39,7 @@ class PostsTableSeeder extends Seeder
                 $post->comments()->create([
                     'name'      => $faker->userName,
                     'content'   => $faker->text(),
-                    'published' => true,
-                    'created_at'=> $commentdate,
-                    'updated_at'=> $commentdate,
+                    'created_at'=> $commentdate
                 ]);
             }
         }

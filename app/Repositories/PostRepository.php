@@ -77,6 +77,10 @@ class PostRepository
      */
     public function getOneAllInfos (int $id)
     {
-        return $this->post->with('user', 'comments')->findOrFail($id);
+        return $this->post->with('user')
+                          ->with(['comments' => function ($query) {
+                              $query->orderBy('created_at', 'DESC');
+                          }])                  
+                          ->findOrFail($id);
     }
 }

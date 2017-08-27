@@ -36,9 +36,28 @@ class FrontController extends Controller
 		return view('front.actu', compact('post'));
 	}
 
-	public function comment()
-	{
-		return 'comment';
+	public function comment (Request $request)
+	{	
+		$this->validate($request, [
+			'name'    => 'required|string',
+			'content' => 'required|string',
+			'post_id' => 'required'
+		]);
+
+		# Vérification ReCaptcha Google
+		$apiURL = "https://www.google.com/recaptcha/api/siteverify?secret="
+				   . env('RECAPTCHA_SECRET')
+				   . "&response=" . $request->input('g-recaptcha-response')
+				   . "&remoteip=" . $_SERVER['REMOTE_ADDR'];
+		$response = json_decode(file_get_contents($apiURL), true);
+		if ($response['success'] === false)
+			return redirect()->back()->with('message', 'La vérification anti-spam a échouée')->withInputs();
+		
+		# Enregistrement du commentaire
+		$post = \App\Post::find($request->post_id);
+		$post->comments()->create($request->all());
+
+		return redirect()->back()->with('message', 'Votre commentaire a été enregistré');
 	}
 
 	public function lycee()

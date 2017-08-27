@@ -18,7 +18,6 @@ class CreateCommentsTable extends Migration
             $table->unsignedInteger('post_id');
             $table->string('name')->default('anonymous');
             $table->text('content');
-            $table->boolean('published')->default(false);
             $table->timestamps();
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('CASCADE');
         });
