@@ -24,6 +24,8 @@
 			<div class="content-wrapper">
 				@yield('content')
 			</div>
+			
+			@include('partials.footer')
 		</main>
 		
 		<aside class="sidebar one-quarter">
@@ -32,9 +34,6 @@
 			</div>
 		</aside>
 	</div>
-
-
-	@include('partials.footer')
 
 	@section('scripts')
 		{{-- Widget Twitter --}}

@@ -88,6 +88,7 @@ $( () => {
         let errorFields = $('.input-field.invalid')
 
         errorFields.each(function (i) {
+            $(this).find('input').removeClass('invalid')
             $(this).find('textarea').removeClass('invalid')
             $(this).find('.select-wrapper').removeClass('invalid')
             $(this).removeClass('invalid')
