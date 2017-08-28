@@ -49,3 +49,11 @@ if(!function_exists('oldValue')) {
 		return $value;
 	}
 }
+
+if(!function_exists('notePercent')) {
+
+	function notePercent($note, $total)
+	{
+		return ($note * 100) / $total;
+	}
+}

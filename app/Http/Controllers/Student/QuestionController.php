@@ -18,15 +18,30 @@ class QuestionController extends Controller
         $this->setUser();
     }
 
+    /**
+     * Display a listing of the resource.
+     * 
+     * @param  Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function index (Request $request)
     {
     	$scores = Score::with('question')->where('user_id', $request->user()->id)->whereHas('question', function($query) {
             $query->where('published', true);
         })->get();
 
+        session(['note' => 1, 'choicesCount' => 5]);
+
     	return view('student.questions_index', compact('scores'));
     }
 
+    /**
+     * Display the question form
+     * 
+     * @param  Request $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function answer (Request $request, $id)
     {
         $score = Score::where(['user_id' => $request->user()->id, 'question_id' => $id])->firstOrFail();
@@ -39,7 +54,13 @@ class QuestionController extends Controller
     	return view('student.questions_answer', compact('question'));
     }
 
-
+    /**
+     * Check response and calculate score
+     *  
+     * @param  Request $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function submit (Request $request, $id)
     {
         $choices = Choice::where('question_id', $id)->get()->keyBy('id');
@@ -51,6 +72,6 @@ class QuestionController extends Controller
         }
         
         $score->update(['note' => $note, 'done' => true]);
-        return redirect()->route('student/questions')->with('message', 'Merci d\'avoir completé le questionnaire');
+        return redirect()->route('student/questions')->with(['note' => $note, 'choicesCount' => $choices->count()]);
     }
 }

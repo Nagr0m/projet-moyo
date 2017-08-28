@@ -170,3 +170,11 @@ header, main, footer {
     display: inline-block;
     margin: 0 20px;
 }
+
+#formfinish .material-icons {
+    font-size: 35px;
+}
+
+#formfinish p {
+    font-size: 1.1rem;
+}

@@ -53,7 +53,11 @@
         <script src="{{ URL::asset('utils/js/jquery.min.js') }}"></script>
         <script src="{{ URL::asset('utils/js/materialize.min.js') }}"></script>
         
-        <script src="{{ URL::asset('js/teacher-main.js') }}"></script>
+        @if(classActivePath('teacher'))
+            <script src="{{ URL::asset('js/teacher-main.js') }}"></script>
+        @elseif(classActivePath('student'))
+            <script src="{{ URL::asset('js/student-main.js') }}"></script>
+        @endif
 
         @if(Session::get('message'))
             <script>

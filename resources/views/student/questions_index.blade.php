@@ -3,6 +3,37 @@
 @section('title', 'Tous les questionnaires')
 
 @section('content')
+
+    {{-- Modale de félicitation --}}
+    @if(Session::get('note'))
+        @php
+            $percent = notePercent(Session::get('note'), Session::get('choicesCount'));
+        @endphp
+        <div id="formfinish" class="modal">
+            <div class="modal-content">
+                @if($percent <= 20)
+                    <h4><i class="material-icons left">sentiment_very_dissatisfied</i>Il va falloir vous mettre à travailler</h4>
+                @elseif($percent > 20 && $percent <= 40)
+                    <i class="material-icons left">sentiment_dissatisfied</i>
+                    Effort insuffisant
+                @elseif($percent > 40 && $percent <= 60)
+                    <i class="material-icons left">sentiment_neutral</i>
+                    Peu mieux faire
+                @elseif($percent > 60 && $percent <= 80)
+                    <i class="material-icons left">sentiment_satisfied</i>
+                    Encore un effort
+                @elseif($percent > 80 && $percent <= 100)
+                    <i class="material-icons left">sentiment_very_satisfied</i>
+                    Félicitations
+                @endif
+                <p>Vous avez fini le questionnaire avec une note de {{ Session::get('note') }} / {{ Session::get('choicesCount') }} soit {{ $percent }}% de bonnes réponses</p>
+            </div>
+            <div class="modal-footer">
+                <a style="cursor: pointer;" class="modal-action modal-close waves-effect waves-cyan btn-flat">Continuer</a>
+            </div>
+        </div>
+    @endif
+
     <div class="section">
         <div class="row">
             <section class="col s12">
@@ -53,8 +84,4 @@
             </section>
         </div>
     </div>
-@endsection
-
-@section('scripts')
-    @parent
 @endsection
