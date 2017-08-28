@@ -22,7 +22,7 @@
                     <div class="card-content container">
                         <h3 class="center-align light">Se connecter</h3>
                         <form method="post" class="section loginForm" method="{{ route('login') }}" novalidate>
-                            {{ csrf_field() }}
+                           {{ csrf_field() }}
                             <div class="input-field @if($errors->has('username')) invalid @endif" data-error="{{$errors->first('username')}}">
                                 <input id="username" name="username" type="text" @if($errors->has('username')) class="invalid" @endif value="{{ old('username') }}" required>
                                 <label for="username">Nom d'utilisateur (prénom)</label>
@@ -46,5 +46,12 @@
     {{-- MaterializeJS --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
     <script src="{{ URL::asset('js/formLogin.js') }}"></script>
+
+    @if(Session::get('message'))
+        <script>
+            let message = "<?php echo Session::get('message');?>"
+            Materialize.toast(message, 4000)
+        </script>
+    @endif
 </body>
 </html>
