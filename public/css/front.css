@@ -29,6 +29,9 @@
         margin: 2rem 0;
         text-align: center;
     }
+    .align-right {
+        text-align: right;
+    }
     .valign {
         display: flex;
         align-items: center;
@@ -48,6 +51,10 @@
     ul.pagination {
         list-style: none;
         padding-left: 0;
+    }
+    .sessionMessage {
+        font-weight: 800;
+        color: #00C4CF;
     }
 
 /* Header */
@@ -224,7 +231,7 @@
         font-weight: 400;
     }
 
-/* Comment Form */
+/* Form */
     .newCommentForm {
         margin: 1rem 0 3rem;
     }
@@ -232,9 +239,30 @@
         display: block; 
         margin: 10px 0 .8rem;
     }
-    input, textarea {
-        margin-bottom: 10px;
+    input,
+    select,
+    textarea {
+        background-color: #fff;
+        border-color: #e0e0e0;
+        border-radius: 5px;
+        border-width: 2px;
+        border-style: solid;
+        color: #474e57;
+        font-size: 16px;
+        font-weight: 400;
+        padding: 10px;
+        transition: border-color .2s ease;
         width: 100%;
+    }
+    input:focus,
+    select:focus,
+    textarea:focus {
+        border: 2px solid #00C4CF;
+    }
+    textarea { resize: vertical; }
+    .field { 
+        margin-bottom: 30px; 
+        position: relative;
     }
     .submit {
         margin: 10px 10px 0 0;
@@ -247,6 +275,17 @@
         font-family: inherit;
         font-weight: 800;
         text-transform: uppercase;
+    }
+    .field.invalid input, .field.invalid textarea {
+        border-color: #cf361b;
+    }
+    .field.invalid:after {
+        content: attr(data-error);
+        color: #cf361b;
+        font-size: .9rem;
+        position: absolute;
+        bottom: -1.6rem;
+        left: 0;
     }
 
 /* Lycée page */
@@ -284,7 +323,6 @@
     header > .cover { height: 18vh; }
     #postsIndex .item {
         flex-direction: row; }
-    input { width: 35%; }
-    textarea { width: 60%; }
-    
+    .comments-wrapper input { width: 35%; }
+    .comments-wrapper textarea { width: 60%; }
 }
