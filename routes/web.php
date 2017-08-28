@@ -19,7 +19,6 @@ Route::get('lycee', 'FrontController@lycee')->name('lycee');
 Route::get('mentionslegales', 'FrontController@mentionslegales')->name('mentionslegales');
 
 Route::match(['get', 'post'], 'contact', 'FrontController@contact')->name('contact');
-
 Route::post('comment', 'FrontController@comment')->name('comment');
 
 # Authentification
@@ -28,7 +27,6 @@ Route::get('logout', 'LoginController@logout')->name('logout');
 
 # Teacher back-office group
 Route::namespace('Teacher')->prefix('teacher')->middleware(['auth', 'role:teacher'])->group(function () {
-
     Route::get('dashboard', 'DashboardController@index')->name('teacher/home');
     # Resources routes
     Route::resource('posts', 'PostController');

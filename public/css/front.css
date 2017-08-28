@@ -45,6 +45,10 @@
         border-bottom: 1px solid #EAEAEA;
         margin: 0 auto;
     }
+    ul.pagination {
+        list-style: none;
+        padding-left: 0;
+    }
 
 /* Header */
     header > .cover {
@@ -179,7 +183,7 @@
         margin-right: 10px;
     }
     #postsIndex > .item > .item-content h2 {
-        margin: 10px 0;
+        margin: 0 0 10px;
         display: inline-block;
     }
     #postsIndex > .item > .item-content p { margin: 5px 0; }
@@ -279,7 +283,6 @@
     .grid-2 > .front-card { height: 170px; }
     header > .cover { height: 18vh; }
     #postsIndex .item {
-        align-items: start;
         flex-direction: row; }
     input { width: 35%; }
     textarea { width: 60%; }

@@ -5,6 +5,7 @@
 
 @section('content')
 	<div class="container" id="postsIndex">
+		<h2>Tous les articles</h2>
 		@forelse ($posts as $post)
 			<div class="valign item" href="{{ route('actu', $post->id) }}">
 				<a href="{{ route('actu', $post->id) }}" title="{{ $post->title }}">

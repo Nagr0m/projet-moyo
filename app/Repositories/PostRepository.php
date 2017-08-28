@@ -66,7 +66,7 @@ class PostRepository
         return $this->post
                     ->with('user')->withCount('comments')
                     ->orderBy('created_at', 'desc')
-                    ->published()->paginate($int);
+                    ->published()->simplePaginate($int);
     }
 
     /**
