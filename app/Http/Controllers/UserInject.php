@@ -7,7 +7,7 @@ use Auth;
 trait UserInject {
 
     /**
-     * Injecte la variable $user dans la vue
+     * Inject $user in view
      *
      * @return void
      */

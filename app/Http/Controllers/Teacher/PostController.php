@@ -70,7 +70,7 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show edit post form
      *
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
@@ -81,7 +81,7 @@ class PostController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Post
      *
      * @param  \App\Http\Requests\PostRequest  $request
      * @param  \App\Post  $post
@@ -159,7 +159,7 @@ class PostController extends Controller
     }
 
     /**
-     * Suppression de masse de posts et d'images associées
+     * Mass post deleting (including pictures)
      *
      * @param array $items
      * @param \App\Repositories\PostImgRepository $PostImgRepository

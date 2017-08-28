@@ -5,8 +5,9 @@ use Illuminate\Database\Seeder;
 class PostsTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Génère les articles d'exemple.
      *
+     * @param Faker\Generator $faker
      * @return void
      */
     public function run(Faker\Generator $faker)

@@ -25,21 +25,27 @@
 				Mis à jour le {{ $post->updated_at }}
 			@endif
 		</p>
-		<div class="divider"></div>
+		<div class="divider" id="commentaires"></div>
 		<div class="comments-wrapper">
 			<h3>Laisser un commentaire</h3>
-			<form method="post" action="{{ route('comment') }}" class="newCommentForm">
+			@if (Session::get('message'))
+				<p class="sessionMessage">{{ Session::get('message') }}</p>
+			@endif
+			<form method="post" action="{{ route('comment') }}" class="newCommentForm validate" novalidate>
 				{{ csrf_field() }}
 				<input type="hidden" name="post_id" value="{{ $post->id }}">
-				<label for="name">
-					Votre nom
-				</label>
-				<input type="text" name="name" id="name" value="{{ old('name') }}">
-				<label for="content">
-					Votre commentaire
-				</label>
-				<textarea rows="7" cols="40" name="content" id="content">{{ old('content') }}</textarea>
-				<br>
+				<div class="field">
+					<label for="name">
+						Votre nom
+					</label>
+					<input type="text" name="name" id="name" value="{{ old('name') }}" required>
+				</div>
+				<div class="field">
+					<label for="content">
+						Votre commentaire
+					</label>
+					<textarea rows="7" cols="40" name="content" id="content" required>{{ old('content') }}</textarea>
+				</div>
 				<div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_PUBLIC') }}"></div>
 				<button class="submit">Envoyer</button>
 			</form>
@@ -60,8 +66,11 @@
 			@endforelse
 		</div>
 	</div>
+@endsection
 
-
-<script src='https://www.google.com/recaptcha/api.js'></script>
-
+@section ('scripts')
+    @parent
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="{{ URL::asset('utils/js/jquery.min.js') }}"></script>
+    <script src="{{ URL::asset('js/frontValidate.js') }}"></script>
 @endsection
