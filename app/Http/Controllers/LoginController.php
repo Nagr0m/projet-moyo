@@ -6,7 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
-{
+{   
+    /**
+     * Login page and form handling
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function login (Request $request)
     {   
         # Traitement du login
@@ -29,6 +35,8 @@ class LoginController extends Controller
                 
                 return redirect()->route('student/home');
             }
+
+            session()->flash('message', 'Identifiants incorrects !');
         }
 
         # Redirection automatique si déjà loggué
@@ -44,6 +52,11 @@ class LoginController extends Controller
         return view('login');
     }
 
+    /**
+     * Logout
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function logout ()
     {
         if(Auth::check())

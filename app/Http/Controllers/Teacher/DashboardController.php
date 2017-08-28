@@ -15,6 +15,11 @@ class DashboardController extends Controller
         $this->setUser();
     }
 
+    /**
+     * Dashboard home
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index ()
     {   
         $posts     = \App\Post::select('id', 'title', 'published')->orderBy('created_at', 'desc')->get();
