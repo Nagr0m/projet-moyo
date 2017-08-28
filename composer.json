@@ -45,6 +45,15 @@
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan optimize"
+        ],
+        "install-project": [
+            "composer install --optimize-autoloader",
+            "php artisan key:generate",
+            "php artisan migrate --seed",
+            "php artisan route:optimize",
+            "php artisan cache:clear",
+            "npm install",
+            "npm run prod"
         ]
     },
     "config": {
