@@ -28,9 +28,7 @@ class QuestionController extends Controller
     {
     	$scores = Score::with('question')->where('user_id', $request->user()->id)->whereHas('question', function($query) {
             $query->where('published', true);
-        })->get();
-
-        session(['note' => 1, 'choicesCount' => 5]);
+        })->orderBy('created_at', 'desc')->paginate(3);
 
     	return view('student.questions_index', compact('scores'));
     }
