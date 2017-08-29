@@ -88,6 +88,9 @@
                                 Aucun article
                             @endif
 
+                            @if (count($posts) > 0)
+                                {{ $posts->links() }}
+                            @endif
                         </div>
                     </div>
                 </section>

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MassUpdateRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,15 @@ class MassUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'operation' => 'required|in:publish,unpublish,delete',
-            'items'     => 'required|array',
+            'username' => 'required|string',
+            'password' => 'required|string'
+        ];
+    }
+
+    public function messages ()
+    {
+        return [
+            'required' => 'Ce champ est obligatoire'
         ];
     }
 }

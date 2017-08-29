@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use View;
-use Illuminate\Http\Request;
-use App\Repositories\PostRepository;
+use App\Mail\ContactMessage;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\UserInject;
+use App\Repositories\PostRepository;
+use App\Http\Requests\ContactRequest;
+use App\Http\Requests\CommentRequest;
+use App\Repositories\ReCaptchaRepository;
 
 class FrontController extends Controller
 {
 	use UserInject;
+	use ReCaptchaRepository;
 
 	public function __construct (PostRepository $PostRepository)
 	{
@@ -58,24 +62,13 @@ class FrontController extends Controller
 	/**
 	 * Post a new comment
 	 *
-	 * @param \Illuminate\Http\Request $request
+	 * @param \App\Http\Requests\CommentRequest $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function comment (Request $request)
+	public function comment (CommentRequest $request)
 	{	
-		$this->validate($request, [
-			'name'    => 'required|string',
-			'content' => 'required|string',
-			'post_id' => 'required'
-		]);
-
 		# Vérification ReCaptcha Google
-		$apiURL = "https://www.google.com/recaptcha/api/siteverify?secret="
-				   . env('RECAPTCHA_SECRET')
-				   . "&response=" . $request->input('g-recaptcha-response')
-				   . "&remoteip=" . $_SERVER['REMOTE_ADDR'];
-		$response = json_decode(file_get_contents($apiURL), true);
-		if ($response['success'] === false)
+		if ( !$this->checkCaptcha( $request->input('g-recaptcha-response') ) )
 			return redirect()->back()->with('message', 'La vérification anti-spam a échouée')->withInputs();
 		
 		# Enregistrement du commentaire
@@ -83,6 +76,48 @@ class FrontController extends Controller
 		$post->comments()->create($request->all());
 
 		return redirect()->to(route('actu', $request->post_id) . '#commentaires')->with('message', 'Votre commentaire a bien été enregistré');
+	}
+
+	/**
+	 * Contact form handling
+	 *
+	 * @param ContactRequest $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function contactSend (ContactRequest $request)
+	{
+		# Vérification ReCaptcha Google
+		if ( !$this->checkCaptcha( $request->input('g-recaptcha-response') ) )
+			return redirect()->back()->with('message', 'La vérification anti-spam a échouée')->withInputs();
+		
+		$datas = [
+			'email'   => $request->email,
+			'name'    => $request->name,
+			'content' => $request->content
+		];
+		
+		Mail::to(env('MAIL_ADMIN_EMAIL'))->send(new ContactMessage($datas));
+
+		return redirect()->back()->with('message', "Votre message a bien été envoyé");
+	}
+
+	/**
+	 * Login Page
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function loginPage ()
+	{	
+		# Redirection automatique si déjà loggué
+        if (\Auth::check())
+        {
+            if (\Auth::user()->role === 'teacher')
+                return redirect()->route('teacher/home');
+            
+            return redirect()->route('student/home');
+		}
+		
+		return view('login');
 	}
 
 	/**
@@ -96,26 +131,12 @@ class FrontController extends Controller
 	}
 
 	/**
-	 * Contact page & form handling
+	 * Contact page
 	 *
-	 * @param \Illuminate\Http\Request $request
 	 * @return \Illuminate\Http\response
 	 */
-	public function contact(Request $request)
+	public function contactPage ()
 	{
-		if ($request->isMethod('post'))
-        {	
-			$this->validate($request, [
-				'name'    => 'required|string',
-				'email'   => 'required|email',
-				'content' => 'required|string'
-			], [
-				'required' => "Ce champ est requis",
-				'email'	   => "Email invalide"
-			]);
-
-        	dd($request);
-        }
 		return view('front.contact');
 	}
 
@@ -128,5 +149,4 @@ class FrontController extends Controller
 	{
 		return view('front.mentionslegales');
 	}
-
 }

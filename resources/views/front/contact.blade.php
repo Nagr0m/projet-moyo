@@ -6,10 +6,16 @@
             <h2>Contact</h2>
         </div>
     <div class="container">
-        <p>
-            Utilisez ce formulaire pour contacter l'administrateur du site. Tous les champs sont obligatoires.
-        </p>
-        <form method="post" class="validate" novalidate>
+        @if (Session::get('message'))
+            <p class="sessionMessage">
+                {{ Session::get('message') }}
+            </p>
+        @else
+            <p>
+                Utilisez ce formulaire pour contacter l'administrateur du site. Tous les champs sont obligatoires.
+            </p>
+        @endif
+        <form method="post" action="{{ route('contactSend') }}" class="validate" novalidate>
             {{ csrf_field() }}
             <div class="grid-2 has-gutter">
             <div class="one-half field">
