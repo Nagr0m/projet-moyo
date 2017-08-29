@@ -71,17 +71,21 @@ class ScoreRepository
     }
 
 
-    public function totalScore ()
-    {
+    public function totalScore ($userID = null)
+    {   
+        if (is_null($userID)) $userID = Auth::user()->id;
+
         return (int) $this->score
-                          ->where('user_id', Auth::user()->id)
+                          ->where('user_id', $userID)
                           ->sum('note');
     }
 
-    public function totalChoices ()
-    {
+    public function totalChoices ($userLevel = null)
+    {   
+        if (is_null($userLevel)) $userLevel = Auth::user()->level;
+
         return (int) $this->choice
-                          ->whereHas('question', function ($query) { $query->where('class_level', Auth::user()->level); })
+                          ->whereHas('question', function ($query) use ($userLevel) { $query->where('class_level', $userLevel); })
                           ->count();
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserInject;
 use App\Http\Controllers\Controller;
+use App\Repositories\ScoreRepository;
 
 class DashboardController extends Controller
 {
@@ -30,10 +31,14 @@ class DashboardController extends Controller
         return view('teacher.dashboard', compact('posts', 'questions', 'comments', 'students'));
     }
 
-    public function studentsPage ()
+    public function studentsPage (ScoreRepository $ScoreRepository)
     {   
-        $students = \App\User::where('role', 'student')->get()->groupBy('level');
+        $students = \App\User::where('role', 'student')->with('scores')->get()->groupBy('level');
+        $totalChoices = [
+            'first_class' => $ScoreRepository->totalChoices('first_class'),
+            'final_class' => $ScoreRepository->totalChoices('final_class')
+        ];
 
-        return view('teacher.students', compact('students'));
+        return view('teacher.students', compact('students', 'ScoreRepository', 'totalChoices'));
     }
 }
