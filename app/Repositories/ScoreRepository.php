@@ -33,12 +33,17 @@ class ScoreRepository
                     ->paginate($int);
     }
 
-
+    /**
+     * Retrieves some user's scores with questionaries
+     * 
+     * @param  int    $int 
+     * @return \Illuminate\Support\Collection
+     */
     public function getUserScoresToDo (int $int)
     {
         return $this->score
                     ->with('question')
-                    ->where(['user_id' => Auth::user()->id, 'done' => false])
+                    ->where('user_id', Auth::user()->id)
                     ->whereHas('question', function ($query) { $query->where('published', true); })
                     ->orderBy('created_at', 'desc')
                     ->take($int)
@@ -70,7 +75,11 @@ class ScoreRepository
                     ->firstOrFail();
     }
 
-
+    /**
+     * Retrieve the user's total score
+     * 
+     * @return int
+     */
     public function totalScore ()
     {
         return (int) $this->score
@@ -78,10 +87,15 @@ class ScoreRepository
                           ->sum('note');
     }
 
-    public function totalChoices ()
+    /**
+     * Retrieve the user's total answered choices
+     * 
+     * @return int
+     */
+    public function totalAnsweredChoices ()
     {
         return (int) $this->choice
-                          ->whereHas('question', function ($query) { $query->where('class_level', Auth::user()->level); })
+                          ->whereHas('question.scores', function ($query) { $query->where(['user_id' => Auth::user()->id, 'done' => true]); })
                           ->count();
     }
 
