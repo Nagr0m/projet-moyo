@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Teacher;
 
+use App\User;
 use App\Score;
 use App\Choice;
 use App\Question;
