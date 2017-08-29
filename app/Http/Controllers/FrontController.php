@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use View;
+use App\Mail\ContactMessage;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\UserInject;
 use App\Repositories\PostRepository;
 use App\Http\Requests\ContactRequest;
@@ -88,7 +90,15 @@ class FrontController extends Controller
 		if ( !$this->checkCaptcha( $request->input('g-recaptcha-response') ) )
 			return redirect()->back()->with('message', 'La vérification anti-spam a échouée')->withInputs();
 		
+		$datas = [
+			'email'   => $request->email,
+			'name'    => $request->name,
+			'content' => $request->content
+		];
 		
+		Mail::to(env('MAIL_ADMIN_EMAIL'))->send(new ContactMessage($datas));
+
+		return redirect()->back()->with('message', "Votre message a bien été envoyé");
 	}
 
 	/**
