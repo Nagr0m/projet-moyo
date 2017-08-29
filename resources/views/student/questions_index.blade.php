@@ -5,26 +5,30 @@
 @section('content')
 
     {{-- Modale de félicitation --}}
-    @if(Session::get('note'))
+    @if(null !==Session::get('note'))
         @php
             $percent = notePercent(Session::get('note'), Session::get('choicesCount'));
         @endphp
+        @if(Session::get('note') == 100)
+            <div class="pyro">
+                <div class="before"></div>
+                <div class="after"></div>
+            </div>
+        @endif
         <div id="formfinish" class="modal">
             <div class="modal-content">
                 @if($percent <= 20)
-                    <h4><i class="material-icons left">sentiment_very_dissatisfied</i>Il va falloir vous mettre à travailler</h4>
+                    <h4 class="red-text text-accent-4"><i class="material-icons left">sentiment_very_dissatisfied</i>Il va falloir vous mettre à travailler !</h4>
                 @elseif($percent > 20 && $percent <= 40)
-                    <i class="material-icons left">sentiment_dissatisfied</i>
-                    Effort insuffisant
+                     <h4 class="orange-text text-accent-4"><i class="material-icons left">sentiment_dissatisfied</i>Vous n'y est pas encore, continuez !</h4>
                 @elseif($percent > 40 && $percent <= 60)
-                    <i class="material-icons left">sentiment_neutral</i>
-                    Peu mieux faire
+                     <h4 class="amber-text text-accent-4"><i class="material-icons left">sentiment_neutral</i>C'est un début, mais il faut faire un effort !</h4>
                 @elseif($percent > 60 && $percent <= 80)
-                    <i class="material-icons left">sentiment_satisfied</i>
-                    Encore un effort
-                @elseif($percent > 80 && $percent <= 100)
-                    <i class="material-icons left">sentiment_very_satisfied</i>
-                    Félicitations
+                     <h4 class="light-green-text text-accent-4"><i class="material-icons left">sentiment_satisfied</i>Vous vous en sortez bien, continuez !</h4>
+                @elseif($percent > 80 && $percent < 100)
+                     <h4 class="green-text text-accent-4"><i class="material-icons left">sentiment_very_satisfied</i>Félicitations, vous avez fait un très bon score</h4>
+                @elseif($percent == 100)
+                     <h4 class="green-text text-accent-4"><i class="material-icons left red-text text-accent-4">whatshot</i>Incroyable !!</h4>
                 @endif
                 <p>Vous avez fini le questionnaire avec une note de {{ Session::get('note') }} / {{ Session::get('choicesCount') }} soit {{ $percent }}% de bonnes réponses</p>
             </div>
@@ -52,6 +56,7 @@
                                     <th>Titre</th>
 
                                     <th>Note</th>
+                                    <th>Date de création</th>
                                 </thead>
                                 <tbody>
                         @endif
@@ -70,6 +75,7 @@
                                         {{ $score->note }} / {{ $score->question->choicesCount }}
                                     @endif
                                 </td>
+                                <td>{{ $score->question->created_at }}</td>
                             </tr>
                         @empty
                             Aucun questionnaire
@@ -79,6 +85,7 @@
                                 </tbody>
                             </table>
                         @endif
+                        {{ $scores->links() }}
                     </div>
                 </div>
             </section>

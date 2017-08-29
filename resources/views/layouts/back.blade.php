@@ -18,6 +18,10 @@
         <link rel="stylesheet" href="{{ URL::asset('css/student.css') }}">
     @endif
 
+    @if(Session::get('note') == 100)
+        <link rel="stylesheet" href="{{ URL::asset('css/firework.css') }}">
+    @endif
+
     {{-- Main CSS --}}
     <link rel="stylesheet" href="{{ URL::asset('css/back.css') }}">
 </head>

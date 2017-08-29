@@ -11,7 +11,6 @@ $( () => {
         if($(formfinish)) {
             $(formfinish).modal('open');
         }
-
     });
     
 })
