@@ -34,11 +34,7 @@ class DashboardController extends Controller
     public function studentsPage (ScoreRepository $ScoreRepository)
     {   
         $students = \App\User::where('role', 'student')->with('scores')->get()->groupBy('level');
-        $totalChoices = [
-            'first_class' => $ScoreRepository->totalChoices('first_class'),
-            'final_class' => $ScoreRepository->totalChoices('final_class')
-        ];
 
-        return view('teacher.students', compact('students', 'ScoreRepository', 'totalChoices'));
+        return view('teacher.students', compact('students', 'ScoreRepository'));
     }
 }

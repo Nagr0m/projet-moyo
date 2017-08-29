@@ -16,7 +16,7 @@
                         @forelse ($students['first_class'] as $student)
                             <span class="students">
                                 <div>
-                                    {{ $student->username }} - {{ $ScoreRepository->totalScore($student->id) }}/{{ $totalChoices['first_class'] }} 
+                                    {{ $student->username }} - {{ $ScoreRepository->totalScore($student->id) }}/{{ $ScoreRepository->totalAnsweredChoices($student->id) }}  
                                 </div>
                                 <div>
                                     ({{ $student->scores->where('done', true)->count() }} questionnaire{{ plural_string($student->scores->where('done', true)->count()) }} fait{{ plural_string($student->scores->where('done', true)->count()) }})
@@ -44,7 +44,7 @@
                         @forelse ($students['final_class'] as $student)
                             <span class="students">
                                 <div>
-                                    {{ $student->username }} - {{ $ScoreRepository->totalScore($student->id) }}/{{ $totalChoices['final_class'] }} 
+                                    {{ $student->username }} - {{ $ScoreRepository->totalScore($student->id) }}/{{ $ScoreRepository->totalAnsweredChoices($student->id) }} 
                                 </div>
                                 <div>
                                     ({{ $student->scores->where('done', true)->count() }} questionnaire{{ plural_string($student->scores->where('done', true)->count()) }} fait{{ plural_string($student->scores->where('done', true)->count()) }})
