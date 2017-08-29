@@ -30,6 +30,7 @@ Route::get('logout', 'LoginController@logout')->name('logout');
 # Teacher back-office group
 Route::namespace('Teacher')->prefix('teacher')->middleware(['auth', 'role:teacher'])->group(function () {
     Route::get('dashboard', 'DashboardController@index')->name('teacher/home');
+    Route::get('students', 'DashboardController@studentsPage')->name('students.index');
     # Resources routes
     Route::resource('posts', 'PostController');
     Route::resource('questions', 'QuestionController');
@@ -37,9 +38,7 @@ Route::namespace('Teacher')->prefix('teacher')->middleware(['auth', 'role:teache
     Route::match(['put', 'patch'], 'multiple/posts', 'PostController@multiplePatch')->name('posts.multiple');
     Route::match(['put', 'patch'], 'multiple/questions', 'QuestionController@multiplePatch')->name('questions.multiple');
 
-    Route::get('students', function () {
-        
-    })->name('students.index');
+    
 });
 
 # Student access
