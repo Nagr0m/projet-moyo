@@ -99,7 +99,7 @@ class QuestionController extends Controller
      */
     public function update(QuestionaryRequest $request, Question $question)
     {
-        # Traitement du questionnaire@if (count($posts) > 0)
+        # Traitement du questionnaire
         $question->update($request->all());
 
         # Traitement des questions

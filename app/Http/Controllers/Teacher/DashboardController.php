@@ -29,4 +29,11 @@ class DashboardController extends Controller
 
         return view('teacher.dashboard', compact('posts', 'questions', 'comments', 'students'));
     }
+
+    public function studentsPage ()
+    {   
+        $students = \App\User::where('role', 'student')->get()->groupBy('level');
+
+        return view('teacher.students', compact('students'));
+    }
 }
