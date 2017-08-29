@@ -47,50 +47,48 @@
                             <i class="material-icons left">description</i>Tous les questionnaires
                         </div>
                     </div>
+
                     <div class="divider"></div>
+                    
                     <div class="panel-content row">
+                        <table class="bordered responsive-resources">
+                            <thead>
+                                <th width="3%"></th>
+                                <th width="37%">Titre</th>
 
-                            <table class="bordered responsive-resources">
-                                <thead>
-                                    <th width="3%"></th>
-                                    <th width="37%">Titre</th>
-
-                                    <th width="30%">Note</th>
-                                    <th width="30%">Date de création</th>
-                                </thead>
-                                <tbody>
-
-                        @forelse($scores as $score)
-                            <tr id="">
-                                <td>
-                                    <i class="tiny material-icons left @if($score->done) light-green-text text-accent-4 @else red-text @endif">brightness_1</i>
-                                </td>
-                                <td>
-                                    {{$score->question->title}}
-                                </td>
-                                <td>
-                                    @if($score->done == 0)
-                                        <a class="btn cyan z-depth-0" href="{{ route('student/question', $score->question->id) }}">Répondre</a>
-                                    @else
-                                        {{ $score->note }} / {{ $score->question->choicesCount }}
-                                    @endif
-                                </td>
-                                <td>{{ $score->question->created_at }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan=4>Aucun questionnaire</td>
-                            </tr>
-                        @endforelse
-
-
-                                </tbody>
-                            </table>
-
+                                <th width="30%">Note</th>
+                                <th width="30%">Date de création</th>
+                            </thead>
+                            <tbody>
+                            @forelse($scores as $score)
+                                <tr>
+                                    <td>
+                                        <i class="tiny material-icons left @if($score->done) light-green-text text-accent-4 @else red-text @endif">brightness_1</i>
+                                    </td>
+                                    <td>
+                                        {{$score->question->title}}
+                                    </td>
+                                    <td>
+                                        @if($score->done == 0)
+                                            <a class="btn cyan z-depth-0" href="{{ route('student/question', $score->question->id) }}">Répondre</a>
+                                        @else
+                                            {{ $score->note }} / {{ $score->question->choicesCount }}
+                                        @endif
+                                    </td>
+                                    <td>{{ $score->question->created_at }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan=4 class="center">Aucun questionnaire</td>
+                                </tr>
+                            @endforelse
+                            </tbody>
+                        </table>
                         {{ $scores->links('vendor.pagination.student') }}
                     </div>
                 </div>
             </section>
         </div>
     </div>
+
 @endsection

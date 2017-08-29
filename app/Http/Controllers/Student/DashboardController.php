@@ -23,7 +23,7 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-    	$scores = \App\Score::with('question')->where('user_id', $request->user()->id)->whereHas('question', function($query) {
+    	$scores = \App\Score::with('question')->where(['user_id' => $request->user()->id, 'done' => true])->whereHas('question', function($query) {
             $query->where('published', true);
         })->orderBy('created_at', 'desc')->take(5)->get();
 

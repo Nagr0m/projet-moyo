@@ -13,7 +13,7 @@
                 </div>
             </div>
 
-            @if (count($posts) > 0)
+            @if ($posts->count() > 0)
                 <form method="post" action="{{ route('posts.multiple') }}" id="massForm">
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
@@ -27,8 +27,7 @@
                                 <i class="material-icons left">description</i>Tous les articles 
                                 <a href="{{ route('posts.create') }}" class="btn-flat z-depth-0"><i class="material-icons left">add</i>Ajouter</a>
                             </div>
-
-                            @if (count($posts) > 0)
+                            @if ($posts->count() > 0)
                                 <div class="resource-options valign-wrapper left-align">
                                     <div class="input-field col s6 m3">
                                         <select name="operation">
@@ -44,23 +43,23 @@
                                 </div>
                             @endif
                         </div>
+
                         <div class="divider"></div>
+
                         <div class="panel-content row">
-                            @if(count($posts) > 0)
-                                <table class="bordered responsive-resources">
-                                    <thead>
-                                        <th class="center-align">
-                                            <input type="checkbox" class="filled-in" id="checkToggle">
-                                            <label for="checkToggle">&nbsp;</label>
-                                        </th>
-                                        <th>Titre</th>
-                                        <th>Infos</th>
-                                        <th>Commentaires</th>
-                                        <th>Publié</th>
-                                    </thead>
-                                    <tbody>
-                                
-                                    @foreach ($posts as $post)
+                            <table class="bordered responsive-resources">
+                                <thead>
+                                    <th class="center-align">
+                                        <input type="checkbox" class="filled-in" id="checkToggle" @if ($posts->count() == 0) disabled @endif>
+                                        <label for="checkToggle">&nbsp;</label>
+                                    </th>
+                                    <th>Titre</th>
+                                    <th>Infos</th>
+                                    <th>Commentaires</th>
+                                    <th>Publié</th>
+                                </thead>
+                                <tbody>
+                                    @forelse ($posts as $post)
                                         <tr>
                                             <td>
                                                 <input type="checkbox" id="check{{$post->id}}" class="filled-in" name="items[]" value="{{$post->id}}">
@@ -80,27 +79,25 @@
                                                 <i class="material-icons">label</i>
                                             </td>
                                         </tr>
-                                    @endforeach
-                                    
-                                    </tbody>
-                                </table>
-                            @else
-                                Aucun article
-                            @endif
-
-                            @if (count($posts) > 0)
-                                {{ $posts->links() }}
-                            @endif
+                                    @empty
+                                        <tr>
+                                            <td colspan=5 class="center">Aucun article</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                            {{ $posts->links() }}
                         </div>
+
                     </div>
                 </section>
 
-            @if (count($posts) > 0)
+            @if ($posts->count() > 0)
                 </form>
             @endif
-
         </div>
     </div>
+
 @endsection
 
 @section('scripts')

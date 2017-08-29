@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </div>
-             @if (count($questions) > 0)
+            @if ($questions->count() > 0)
                 <form method="post" action="{{ route('questions.multiple') }}" id="massForm">
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
@@ -31,8 +31,7 @@
                                     Ajouter
                                 </a>
                             </div>
-
-                            @if (count($questions) > 0)
+                            @if ($questions->count() > 0)
                                 <div class="ressource-options valign-wrapper left-align">
                                     <div class="input-field col s6 m3">
                                         <select name="operation">
@@ -47,58 +46,57 @@
                                     </div>
                                 </div>
                             @endif
-
                         </div>
+
                         <div class="divider"></div>
+
                         <div class="panel-content row">
-
-                            @if (count($questions) > 0)
-                                <table class="bordered responsive-resources">
-                                    <thead>
-                                        <th>
-                                            <input type="checkbox" class="filled-in" id="checkToggle">
-                                            <label for="checkToggle">&nbsp;</label>
-                                        </th>
-                                        <th>Titre</th>
-                                        <th>Date de création</th>
-                                        <th>Participations</th>
-                                        <th>Publié</th>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($questions as $question)
-                                            <tr>
-                                                <td>
-                                                    <input type="checkbox" id="check{{$question->id}}" class="filled-in" name="items[]" value="{{$question->id}}">
-                                        <label for="check{{$question->id}}">&nbsp;</label>
-                                                </td>
-                                                <td>
-                                                    <a href="{{ route('questions.edit', $question->id) }}">{{ $question->title }}</a>
-                                                </td>
-                                                <td>
-                                                    <b>{{ $question->created_at }}</b>
-                                                </td>
-                                                <td>
-                                                    <i class="material-icons left">people</i>
-                                                    {{ $question->done_count }}/{{ $question->scores_count }}
-                                                </td>
-                                                <td class="@if($question->published) green-text @else red-text @endif">
-                                                    <i class="material-icons">label</i>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            @else
-                                Aucun questionnaire
-                            @endif
-
-                            @if (count($questions) > 0)
-                                {{ $questions->links() }}
-                            @endif
+                            <table class="bordered responsive-resources">
+                                <thead>
+                                    <th>
+                                        <input type="checkbox" class="filled-in" id="checkToggle" @if ($questions->count() == 0) disabled @endif>
+                                        <label for="checkToggle">&nbsp;</label>
+                                    </th>
+                                    <th>Titre</th>
+                                    <th>Date de création</th>
+                                    <th>Participations</th>
+                                    <th>Publié</th>
+                                </thead>
+                                <tbody>
+                                    @forelse ($questions as $question)
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" id="check{{$question->id}}" class="filled-in" name="items[]" value="{{$question->id}}">
+                                                <label for="check{{$question->id}}">&nbsp;</label>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('questions.edit', $question->id) }}">{{ $question->title }}</a>
+                                            </td>
+                                            <td>
+                                                <b>{{ $question->created_at }}</b>
+                                            </td>
+                                            <td>
+                                                <i class="material-icons left">people</i>
+                                                {{ $question->done_count }} / {{ $question->scores_count }}
+                                            </td>
+                                            <td class="@if($question->published) green-text @else red-text @endif">
+                                                <i class="material-icons">label</i>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan=5 class="center">Aucun questionnaire</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                            {{ $questions->links() }}
                         </div>
+
                     </div>
                 </section>
-            @if (count($questions) > 0)
+
+            @if ($questions->count() > 0)
                 </form>
             @endif
         </div>
