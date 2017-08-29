@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Student;
 
-use App\Score;
 use App\Choice;
 use App\Question;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserInject;
 use App\Http\Controllers\Controller;
+use App\Repositories\ScoreRepository;
 
 class QuestionController extends Controller
 {
@@ -24,11 +24,9 @@ class QuestionController extends Controller
      * @param  Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index (Request $request)
+    public function index (ScoreRepository $ScoreRepository, Request $request)
     {
-    	$scores = Score::with('question')->where('user_id', $request->user()->id)->whereHas('question', function($query) {
-            $query->where('published', true);
-        })->orderBy('created_at', 'desc')->paginate(3);
+    	$scores = $ScoreRepository->getUserScoresPaginate(3);
 
     	return view('student.questions_index', compact('scores'));
     }
@@ -40,15 +38,13 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function answer (Request $request, $id)
-    {
-        $score = Score::where(['user_id' => $request->user()->id, 'question_id' => $id])->firstOrFail();
-        if ($score->done)
+    public function answer (ScoreRepository $ScoreRepository, Request $request, $id)
+    {   
+        if ($ScoreRepository->isDone($id))
             return redirect()->route('student/questions')->with('message', 'Vous avez déjà fait ce questionnaire');
 
     	$question = Question::with('choices')->findOrFail($id);
 
-    	// dd($question);
     	return view('student.questions_answer', compact('question'));
     }
 
@@ -59,11 +55,11 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function submit (Request $request, $id)
+    public function submit (ScoreRepository $ScoreRepository,Request $request, $id)
     {
         $choices = Choice::where('question_id', $id)->get()->keyBy('id');
-        $score = Score::where(['user_id' => $request->user()->id, 'question_id' => $id])->firstOrFail();
-        $note = 0;
+        $score   = $ScoreRepository->getScoreByQuestion($id);
+        $note    = 0;
 
         foreach ($choices as $key => $choice) {
             if ($choice->answer == $request->input($key)) $note++;
