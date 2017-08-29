@@ -18,7 +18,7 @@ RECAPTCHA_SECRET=
 ### Installation
 Entrer la commande :
 ```
-composer first-install
+sh install.sh
 ```
 
 ## Crédits
