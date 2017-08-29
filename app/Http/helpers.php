@@ -54,6 +54,6 @@ if(!function_exists('notePercent')) {
 
 	function notePercent($note, $total)
 	{
-		return ($note * 100) / $total;
+		return round(($note * 100) / $total, 1);
 	}
 }
