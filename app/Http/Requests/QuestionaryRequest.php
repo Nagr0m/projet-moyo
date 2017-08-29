@@ -27,7 +27,7 @@ class QuestionaryRequest extends FormRequest
             'title'       => 'required|string',  
             'content'     => 'required|string',
             'published'   => 'required',
-            'class_level' => 'required',
+            'class_level' => 'required|in:first_class,final_class',
             'questions.*' => 'required'
         ];
     }

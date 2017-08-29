@@ -18,11 +18,13 @@ Route::get('actu/{id}', 'FrontController@postSingle')->name('actu');
 Route::get('lycee', 'FrontController@lycee')->name('lycee');
 Route::get('mentionslegales', 'FrontController@mentionslegales')->name('mentionslegales');
 
-Route::match(['get', 'post'], 'contact', 'FrontController@contact')->name('contact');
+Route::get('contact', 'FrontController@contactPage')->name('contact');
+Route::post('contact', 'FrontController@contactSend')->name('contactSend');
 Route::post('comment', 'FrontController@comment')->name('comment');
 
 # Authentification
-Route::match(['get', 'post'], 'login', 'LoginController@login')->name('login');
+Route::get('login', 'FrontController@loginPage')->name('loginPage');
+Route::post('login', 'LoginController@login')->name('login');
 Route::get('logout', 'LoginController@logout')->name('logout');
 
 # Teacher back-office group

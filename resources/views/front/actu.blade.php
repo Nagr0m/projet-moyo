@@ -60,6 +60,7 @@
 						{{ $comment->content }}
 					</p>
 				</div>
+				<div class="divider"></div>
 
 			@empty
 				<p>Auncun commentaire</p>
