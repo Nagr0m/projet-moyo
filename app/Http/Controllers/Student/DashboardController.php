@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserInject;
 use App\Http\Controllers\Controller;
+use App\Repositories\ScoreRepository;
 
 class DashboardController extends Controller
 {
@@ -21,12 +22,12 @@ class DashboardController extends Controller
      * @param  Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(ScoreRepository $ScoreRepository, Request $request)
     {
-    	$scores = \App\Score::with('question')->where(['user_id' => $request->user()->id, 'done' => true])->whereHas('question', function($query) {
-            $query->where('published', true);
-        })->orderBy('created_at', 'desc')->take(5)->get();
+    	$scores = $ScoreRepository->getUserScoresToDo(5);
+        $totalScore = $ScoreRepository->totalScore();
+        $totalChoices = $ScoreRepository->totalChoices();
 
-    	return view('student.dashboard', compact('scores'));
+    	return view('student.dashboard', compact('scores', 'totalScore', 'totalChoices'));
     }
 }

@@ -4,14 +4,17 @@ namespace App\Repositories;
 
 use Auth;
 use App\Score;
+use App\Choice;
 
 class ScoreRepository
 {
     protected $score;
+    protected $choice;
 
-    public function __construct (Score $score)
+    public function __construct (Score $score, Choice $choice)
     {
         $this->score = $score;
+        $this->choice = $choice;
     }
 
     /**
@@ -28,6 +31,18 @@ class ScoreRepository
                     ->whereHas('question', function ($query) { $query->where('published', true); })
                     ->orderBy('created_at', 'desc')
                     ->paginate($int);
+    }
+
+
+    public function getUserScoresToDo (int $int)
+    {
+        return $this->score
+                    ->with('question')
+                    ->where(['user_id' => Auth::user()->id, 'done' => false])
+                    ->whereHas('question', function ($query) { $query->where('published', true); })
+                    ->orderBy('created_at', 'desc')
+                    ->take($int)
+                    ->get();
     }
 
     /**
@@ -53,6 +68,21 @@ class ScoreRepository
         return $this->score
                     ->where(['user_id' => Auth::user()->id, 'question_id' => $question_id])
                     ->firstOrFail();
+    }
+
+
+    public function totalScore ()
+    {
+        return (int) $this->score
+                          ->where('user_id', Auth::user()->id)
+                          ->sum('note');
+    }
+
+    public function totalChoices ()
+    {
+        return (int) $this->choice
+                          ->whereHas('question', function ($query) { $query->where('class_level', Auth::user()->level); })
+                          ->count();
     }
 
 
