@@ -20,7 +20,7 @@
                             <span class="panel-item valign-wrapper">
                                 <a href="{{ route('student/question', $score->question->id) }}">
                                      <i class="tiny material-icons left @if($score->done) light-green-text text-accent-4 @else red-text @endif">brightness_1</i>
-                                     {{ $score->question->content }}
+                                     {{ $score->question->title }}
                                 </a>
                             </span>
                             @if($loop->iteration === 5)

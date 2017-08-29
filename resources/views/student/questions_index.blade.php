@@ -9,7 +9,7 @@
         @php
             $percent = notePercent(Session::get('note'), Session::get('choicesCount'));
         @endphp
-        @if(Session::get('note') == 100)
+        @if($percent == 100)
             <div class="pyro">
                 <div class="before"></div>
                 <div class="after"></div>
@@ -49,17 +49,17 @@
                     </div>
                     <div class="divider"></div>
                     <div class="panel-content row">
-                        @if($scores->count() > 0)
+
                             <table class="bordered responsive-resources">
                                 <thead>
-                                    <th width="10"></th>
-                                    <th>Titre</th>
+                                    <th width="3%"></th>
+                                    <th width="37%">Titre</th>
 
-                                    <th>Note</th>
-                                    <th>Date de création</th>
+                                    <th width="30%">Note</th>
+                                    <th width="30%">Date de création</th>
                                 </thead>
                                 <tbody>
-                        @endif
+
                         @forelse($scores as $score)
                             <tr id="">
                                 <td>
@@ -78,14 +78,16 @@
                                 <td>{{ $score->question->created_at }}</td>
                             </tr>
                         @empty
-                            Aucun questionnaire
+                            <tr>
+                                <td colspan=4>Aucun questionnaire</td>
+                            </tr>
                         @endforelse
 
-                        @if($scores->count() > 0)
+
                                 </tbody>
                             </table>
-                        @endif
-                        {{ $scores->links() }}
+
+                        {{ $scores->links('vendor.pagination.student') }}
                     </div>
                 </div>
             </section>

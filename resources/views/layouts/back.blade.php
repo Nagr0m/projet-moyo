@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="{{ URL::asset('css/student.css') }}">
     @endif
 
-    @if(Session::get('note') == 100)
+    @if(Session::get('note'))
         <link rel="stylesheet" href="{{ URL::asset('css/firework.css') }}">
     @endif
 
