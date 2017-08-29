@@ -26,7 +26,7 @@ class QuestionController extends Controller
      */
     public function index (ScoreRepository $ScoreRepository, Request $request)
     {
-    	$scores = $ScoreRepository->getUserScoresPaginate(3);
+    	$scores = $ScoreRepository->getUserScoresPaginate(10);
 
     	return view('student.questions_index', compact('scores'));
     }
