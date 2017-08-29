@@ -15,13 +15,17 @@ class DashboardController extends Controller
         $this->setUser();
     }
 
+    /**
+     * Display dashboard student
+     * 
+     * @param  Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function index(Request $request)
     {
     	$scores = \App\Score::with('question')->where('user_id', $request->user()->id)->whereHas('question', function($query) {
             $query->where('published', true);
-        })->get();
-
-    	// dd($scores[0]->question->choicesCount);
+        })->orderBy('created_at', 'desc')->take(5)->get();
 
     	return view('student.dashboard', compact('scores'));
     }
