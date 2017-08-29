@@ -91,6 +91,10 @@
                             @else
                                 Aucun questionnaire
                             @endif
+
+                            @if (count($questions) > 0)
+                                {{ $questions->links() }}
+                            @endif
                         </div>
                     </div>
                 </section>

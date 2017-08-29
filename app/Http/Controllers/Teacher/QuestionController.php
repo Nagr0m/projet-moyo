@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Teacher;
 use App\Score;
 use App\Choice;
 use App\Question;
-use Illuminate\Http\Request;
 use App\Http\Controllers\UserInject;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassUpdateRequest;
@@ -29,7 +28,7 @@ class QuestionController extends Controller
     {   
         $questions = Question::withCount(['scores', 'scores as done' => function ($query) {
                             $query->where('done', true);
-                        }])->orderBy('created_at', 'desc')->get();
+                        }])->orderBy('created_at', 'desc')->paginate(5);
 
         return view('teacher.questions_index', compact('questions'));
     }
@@ -99,7 +98,7 @@ class QuestionController extends Controller
      */
     public function update(QuestionaryRequest $request, Question $question)
     {
-        # Traitement du questionnaire
+        # Traitement du questionnaire@if (count($posts) > 0)
         $question->update($request->all());
 
         # Traitement des questions
