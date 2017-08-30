@@ -15,25 +15,24 @@
                     <div class="panel-content">
                         @if($scores->count() > 0)
                             <div class="panel-title">Vos questionnaires à faire</div>
-                        @endif
-                        @forelse($scores->where('done', false)   as $score)
-                            <span class="panel-item valign-wrapper">
-                                <a href="{{ route('student/question', $score->question->id) }}">
-                                     <i class="tiny material-icons left @if($score->done) light-green-text text-accent-4 @else red-text @endif">brightness_1</i>
-                                     {{ $score->question->title }}
-                                </a>
-                            </span>
-                            @if($loop->iteration === 5)
-                                @break
-                            @endif
-                        @empty
-                            Aucun questionnaire
-                        @endforelse
-
-                        @if($scores->count() > 0)
+                            @forelse($scores->where('done', false) as $score)
+                                <span class="panel-item valign-wrapper">
+                                    <a href="{{ route('student/question', $score->question->id) }}">
+                                         <i class="tiny material-icons left @if($score->done) light-green-text text-accent-4 @else red-text @endif">brightness_1</i>
+                                         {{ $score->question->title }}
+                                    </a>
+                                </span>
+                                @if($loop->iteration === 5)
+                                    @break
+                                @endif
+                            @empty
+                                <p>Bravo ! Vous avez fini tout vos questionnaires.</p>
+                            @endforelse
                             <div class="center-align">
                                 <a class="btn cyan waves-effect waves-light z-depth-0" href="{{ route('student/questions') }}">Tous les questionnaires</a>
                             </div>
+                        @else
+                            Aucun questionnaire
                         @endif
                         
                     </div>
