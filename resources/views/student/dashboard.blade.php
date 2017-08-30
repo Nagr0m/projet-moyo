@@ -48,7 +48,7 @@
                     <div class="divider"></div>
                     <div class="panel-content col s12 l6">
                         <span class="panel-item valign-wrapper">
-                            <i class="material-icons left cyan-text text-darken-3">timeline</i>Note global : {{ $totalScore }} / {{ $totalAnsweredChoices }}
+                            <i class="material-icons left cyan-text text-darken-3">timeline</i>Note globale : {{ $totalScore }} / {{ $totalAnsweredChoices }}
                         </span>
                         <span class="panel-item valign-wrapper">
                             <i class="material-icons left cyan-text text-darken-2">thumbs_up_down</i>{{ notePercent($totalScore, $totalAnsweredChoices) }} % de réussite

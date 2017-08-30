@@ -28,7 +28,6 @@ class DashboardController extends Controller
         $totalScore = $ScoreRepository->totalScore();
         $totalAnsweredChoices = $ScoreRepository->totalAnsweredChoices();
 
-
     	return view('student.dashboard', compact('scores', 'totalScore', 'totalAnsweredChoices'));
     }
 }
