@@ -26,7 +26,7 @@
                                     @break
                                 @endif
                             @empty
-                                <p>Bravo ! Vous avez fini tout vos questionnaires.</p>
+                                <p>Bravo ! Vous avez fini tous vos questionnaires.</p>
                             @endforelse
                             <div class="center-align">
                                 <a class="btn cyan waves-effect waves-light z-depth-0" href="{{ route('student/questions') }}">Tous les questionnaires</a>
